@@ -31,7 +31,6 @@ public class GetBooksListExternalResponse {
         private String title; //
         @NotBlank
         private String publisher; //
-        private String category; //
 
         private List<Long> recommendationIdList; //
 
@@ -54,20 +53,11 @@ public class GetBooksListExternalResponse {
             this.rentalStopTime = rentalStopTime;
         }
 
-        public String getCategory() {
-            return category;
-        }
-
-        public void setCategory(String category) {
-            this.category = category;
-        }
-
-        public ExternalBook(@NotBlank Long id, @NotBlank String title, String category, @NotBlank String publisher, String renter,
+        public ExternalBook(@NotBlank Long id, @NotBlank String title, @NotBlank String publisher, String renter,
                             LocalDateTime rentalStartTime, LocalDateTime rentalStopTime, List<Long> recommendationList,
                             @NotBlank List<ExternalContentData> externalContentData) {
             this.id = id;
             this.title = title;
-            this.category = category;
             this.publisher = publisher;
             this.renter = renter;
             this.rentalStartTime = rentalStartTime;
@@ -135,10 +125,11 @@ public class GetBooksListExternalResponse {
             private List<Long> recommendationIdList;
 
             public ExternalContentData(@NotBlank String author, String description, @NotBlank String title,
-                                       @NotBlank List<Long> recommendationIdList) {
+                                       String category, @NotBlank List<Long> recommendationIdList) {
                 this.author = author;
                 this.description = description;
                 this.title = title;
+                this.category = category;
                 this.recommendationIdList = recommendationIdList;
             }
 

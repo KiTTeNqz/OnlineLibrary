@@ -43,17 +43,24 @@ class OnlineLibraryApplicationTests {
         recommendationIdList.add(6L);
 
         List<GetBooksListExternalResponse.ExternalBook.ExternalContentData> externalContentData = new ArrayList<>();
-        externalContentData.add(new GetBooksListExternalResponse.ExternalBook.ExternalContentData("Description", "Content Title", "Author", "Роман", recommendationIdList));
+        externalContentData.add(new GetBooksListExternalResponse.ExternalBook.ExternalContentData("Description", "Content Title", "Author", "poem", recommendationIdList));
 
-        LocalDateTime rentalStartTime = LocalDateTime.of(2022, 1, 1, 10, 0);
-        LocalDateTime rentalStopTime = LocalDateTime.of(2022, 1, 10, 10, 0);
+        LocalDateTime rentalStartTime = LocalDateTime.of(2022, 1, 1, 10, 0,0);
+        LocalDateTime rentalStopTime = LocalDateTime.of(2022, 1, 10, 10, 0,0);
 
-        GetBooksListExternalResponse.ExternalBook externalBook = new GetBooksListExternalResponse.ExternalBook(123456L, "Book Title", "Роман", "Publisher", "Renter", rentalStartTime, rentalStopTime, recommendationIdList, externalContentData);
+        GetBooksListExternalResponse.ExternalBook externalBook = new GetBooksListExternalResponse.ExternalBook(123456L, "Book Title", "Publisher", "Renter", rentalStartTime, rentalStopTime, recommendationIdList, externalContentData);
 
         externalBookData.add(externalBook);
         GetBooksListExternalResponse externalResponse = new GetBooksListExternalResponse(externalBookData);
         GetBooksListMapper mapper = new GetBooksListMapper();
         GetBooksListAdapterResponse adapterResponse = mapper.mapResponse(externalResponse);
+
+        assertEquals(1, adapterResponse.getCount(), "Неверное количество");
+        assertEquals(123456L,adapterResponse.getBookData().get(0).getId(), "Неверный Id");
+        assertEquals("Book Title",adapterResponse.getBookData().get(0).getTitle(), "Неверное название");
+        assertEquals("Publisher",adapterResponse.getBookData().get(0).getPublisher(), "Неверный издатель");
+        assertEquals("Renter",adapterResponse.getBookData().get(0).getRenter(), "Неверный renter");
+        assertEquals("Стихотворение",adapterResponse.getBookData().get(0).getExternalContentData().get(0).getCategory());
     }
 
 }

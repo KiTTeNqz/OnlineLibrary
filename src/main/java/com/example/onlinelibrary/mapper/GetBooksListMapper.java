@@ -52,7 +52,6 @@ public class GetBooksListMapper {
         return new GetBooksListAdapterResponse.Book(
                 externalBook.getId(),
                 externalBook.getTitle(),
-                mapCategory(externalBook.getCategory()),
                 externalBook.getPublisher(),
                 externalBook.getRenter(),
                 rentalStartTime,
