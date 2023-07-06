@@ -1,8 +1,4 @@
 package com.example.onlinelibrary.model.getBookList;
-
-import com.example.onlinelibrary.model.AttrConversion.Attribute;
-import feign.ResponseMapper;
-
 import java.util.List;
 
 public class GetBooksListAdapterRequest {

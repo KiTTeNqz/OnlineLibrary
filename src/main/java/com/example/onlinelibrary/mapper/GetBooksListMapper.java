@@ -4,6 +4,7 @@ import com.example.onlinelibrary.model.getBookList.GetBooksListAdapterRequest;
 import com.example.onlinelibrary.model.getBookList.GetBooksListAdapterResponse;
 import com.example.onlinelibrary.model.getBookList.GetBooksListExternalRequest;
 import com.example.onlinelibrary.model.getBookList.GetBooksListExternalResponse;
+import org.springframework.stereotype.Component;
 
 import java.time.ZoneId;
 import java.time.ZoneOffset;
@@ -13,6 +14,7 @@ import java.util.List;
 import java.util.Map;
 import java.util.stream.Collectors;
 
+@Component
 public class GetBooksListMapper {
     public GetBooksListExternalRequest mapRequest(GetBooksListAdapterRequest request) {
         GetBooksListExternalRequest externalRequest = new GetBooksListExternalRequest();
