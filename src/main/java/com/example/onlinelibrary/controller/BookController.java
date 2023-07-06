@@ -4,6 +4,7 @@ import com.example.onlinelibrary.exceptions.ExceptionResponse;
 import com.example.onlinelibrary.model.AttrConversion.Attribute;
 import com.example.onlinelibrary.model.AttrConversion.SearchAttribute;
 import com.example.onlinelibrary.model.Book;
+import com.example.onlinelibrary.model.getBookList.GetBooksListAdapterRequest;
 import com.example.onlinelibrary.service.BookService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
@@ -31,17 +32,9 @@ public class BookController {
     @GetMapping
     public ResponseEntity<List<Book>> getBooksList(
             @RequestParam("x-trace-id") Long traceId,
-            @RequestBody List<SearchAttribute> searchAttribute) throws ExceptionResponse {
+            @RequestBody GetBooksListAdapterRequest request) throws ExceptionResponse {
 
             List<List<Attribute>> searchData = new ArrayList<>();
-            try {
-                searchData.add(searchAttribute.stream().
-                        map(SearchAttribute::convertToAttribute).toList()
-                );
-            }catch (Exception e){
-                throw new ExceptionResponse("ERR-003", "error", "Ошибка обработки" +
-                        " создания/изменения внешнего объекта");
-            }
 
             List<Book> books = bookService.getAllBooks(searchData, traceId);
             traceId++;
