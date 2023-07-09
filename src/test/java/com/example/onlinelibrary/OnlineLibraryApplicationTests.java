@@ -2,6 +2,7 @@ package com.example.onlinelibrary;
 
 import com.example.onlinelibrary.exceptions.ExceptionResponse;
 import com.example.onlinelibrary.mapper.GetBooksListMapper;
+import com.example.onlinelibrary.model.ContentData;
 import com.example.onlinelibrary.model.getBookList.GetBooksListAdapterRequest;
 import com.example.onlinelibrary.model.getBookList.GetBooksListAdapterResponse;
 import com.example.onlinelibrary.model.getBookList.GetBooksListExternalRequest;
@@ -62,8 +63,8 @@ class OnlineLibraryApplicationTests {
         recommendationIdList.add(5L);
         recommendationIdList.add(6L);
 
-        List<GetBooksListExternalResponse.ExternalBook.ExternalContentData> externalContentData = new ArrayList<>();
-        externalContentData.add(new GetBooksListExternalResponse.ExternalBook.ExternalContentData("Description", "Content Title", "Author", "poem", recommendationIdList));
+        List<ContentData> externalContentData = new ArrayList<>();
+        externalContentData.add(new ContentData("Description", "Content Title", "Author", "poem", recommendationIdList));
 
         LocalDateTime rentalStartTime = LocalDateTime.of(2023, 1, 1, 10, 20,30);
         LocalDateTime rentalStopTime = LocalDateTime.of(2023, 1, 10, 10, 20,30);

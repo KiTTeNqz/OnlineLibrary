@@ -1,5 +1,6 @@
 package com.example.onlinelibrary.model.getBookList;
 
+import com.example.onlinelibrary.model.ContentData;
 import jakarta.validation.constraints.NotBlank;
 
 import java.time.LocalDateTime;
@@ -35,7 +36,7 @@ public class GetBooksListExternalResponse {
         private List<Long> recommendationIdList; //
 
         @NotBlank
-        private List<ExternalContentData> externalContentData; //
+        private List<ContentData> externalContentData; //
 
         public LocalDateTime getRentalStartTime() {
             return rentalStartTime;
@@ -55,7 +56,7 @@ public class GetBooksListExternalResponse {
 
         public ExternalBook(@NotBlank Long id, @NotBlank String title, @NotBlank String publisher, String renter,
                             LocalDateTime rentalStartTime, LocalDateTime rentalStopTime, List<Long> recommendationList,
-                            @NotBlank List<ExternalContentData> externalContentData) {
+                            @NotBlank List<ContentData> externalContentData) {
             this.id = id;
             this.title = title;
             this.publisher = publisher;
@@ -106,52 +107,13 @@ public class GetBooksListExternalResponse {
             this.recommendationIdList = recommendationIdList;
         }
 
-        public List<ExternalContentData> getExternalContentData() {
+        public List<ContentData> getExternalContentData() {
             return externalContentData;
         }
 
-        public void setExternalContentData(List<ExternalContentData> externalContentData) {
+        public void setExternalContentData(List<ContentData> externalContentData) {
             this.externalContentData = externalContentData;
         }
 
-        public static class ExternalContentData {
-            private String description;
-            @NotBlank
-            private String title;
-            @NotBlank
-            private String author;
-            private String category;
-            @NotBlank
-            private List<Long> recommendationIdList;
-
-            public ExternalContentData(@NotBlank String author, String description, @NotBlank String title,
-                                       String category, @NotBlank List<Long> recommendationIdList) {
-                this.author = author;
-                this.description = description;
-                this.title = title;
-                this.category = category;
-                this.recommendationIdList = recommendationIdList;
-            }
-
-            public String getDescription() {
-                return description;
-            }
-
-            public String getTitle() {
-                return title;
-            }
-
-            public String getAuthor() {
-                return author;
-            }
-
-            public String getCategory() {
-                return category;
-            }
-
-            public List<Long> getRecommendationIdList() {
-                return recommendationIdList;
-            }
-        }
     }
 }

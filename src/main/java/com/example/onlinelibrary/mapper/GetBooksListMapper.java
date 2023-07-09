@@ -1,5 +1,6 @@
 package com.example.onlinelibrary.mapper;
 
+import com.example.onlinelibrary.model.ContentData;
 import com.example.onlinelibrary.model.getBookList.GetBooksListAdapterRequest;
 import com.example.onlinelibrary.model.getBookList.GetBooksListAdapterResponse;
 import com.example.onlinelibrary.model.getBookList.GetBooksListExternalRequest;
@@ -47,7 +48,7 @@ public class GetBooksListMapper {
                         ZoneOffset.ofHours(5))
                 .withZoneSameInstant(ZoneId.of("+03:00"));
 
-        List<GetBooksListAdapterResponse.Book.ContentData> contentData = externalBook.getExternalContentData().stream()
+        List<ContentData> contentData = externalBook.getExternalContentData().stream()
                 .map(this::mapContentData)
                 .toList();
 
@@ -63,8 +64,8 @@ public class GetBooksListMapper {
         );
     }
 
-    private GetBooksListAdapterResponse.Book.ContentData mapContentData(GetBooksListExternalResponse.ExternalBook.ExternalContentData externalContentData){
-        return new GetBooksListAdapterResponse.Book.ContentData(
+    private ContentData mapContentData(ContentData externalContentData){
+        return new ContentData(
           externalContentData.getDescription(),
           externalContentData.getTitle(),
           externalContentData.getAuthor(),

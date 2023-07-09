@@ -1,5 +1,6 @@
 package com.example.onlinelibrary.model.getBookList;
 
+import com.example.onlinelibrary.model.ContentData;
 import com.fasterxml.jackson.annotation.JsonFormat;
 import jakarta.validation.constraints.NotBlank;
 import java.time.ZonedDateTime;
@@ -108,66 +109,6 @@ public class GetBooksListAdapterResponse {
             this.rentalStopTime = rentalStopTime;
             this.recommendationIdList = recommendationList;
             this.externalContentData = externalContentData;
-        }
-
-        public static class ContentData {
-            private String description;
-            @NotBlank
-            private String title;
-            @NotBlank
-            private String author;
-            private String category;
-            @NotBlank
-            private List<Long> recommendationIdList;
-
-            public String getDescription() {
-                return description;
-            }
-
-            public void setDescription(String description) {
-                this.description = description;
-            }
-
-            public String getTitle() {
-                return title;
-            }
-
-            public void setTitle(String title) {
-                this.title = title;
-            }
-
-            public String getAuthor() {
-                return author;
-            }
-
-            public void setAuthor(String author) {
-                this.author = author;
-            }
-
-            public String getCategory() {
-                return category;
-            }
-
-            public void setCategory(String category) {
-                this.category = category;
-            }
-
-            public List<Long> getRecommendationIdList() {
-                return recommendationIdList;
-            }
-
-            public void setRecommendationIdList(List<Long> recommendationIdList) {
-                this.recommendationIdList = recommendationIdList;
-            }
-
-            public ContentData(String description, @NotBlank String title, @NotBlank String author, String category,
-                               @NotBlank List<Long> recommendationIdList) {
-                this.description = description;
-                this.title = title;
-                this.author = author;
-                this.category = category;
-                this.recommendationIdList = recommendationIdList;
-            }
         }
     }
 }
