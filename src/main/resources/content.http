@@ -1,0 +1,101 @@
+###
+POST http://localhost:8080/__admin/mappings
+Content-Type: application/json
+
+{
+  "name": "getBooksListTest",
+  "request": {
+    "method": "GET",
+    "url": "/OnlineLibrary/getBooksList/modelGetBooksList/getBooksList",
+    "headers": {
+      "x-trace-id": {
+        "equalTo": "123UFC"
+      }
+    },
+    "bodyPatterns": [
+      {
+        "matchesJsonPath": "$.bookData[0].attributes[?(@.searchAttribute=='id' && @.value contains '12345')]"
+      }
+    ]
+  },
+  "response": {
+    "status": 200,
+    "jsonBody": {
+      "bookData": [
+        {
+          "id": 122334567,
+          "renter": "ФИО",
+          "rentalStartTime": "23.06.2022 17:42:36",
+          "rentalStopTime": "25.06.2022 07:41:30",
+          "title": "Сборник стихов",
+          "publisher": "Издательство",
+          "recommendationIdList": [123, 8347843, 6543893],
+          "contentData": [
+            {
+              "description": "Стих про зиму",
+              "title": "Зимнее утро",
+              "author": "Пушкин А.С.",
+              "category": "poem",
+              "recommendationIdList": [311749, 1234, 54323]
+            }
+          ]
+        }
+      ]
+    }
+  }
+}
+
+###
+GET http://localhost:8080/OnlineLibrary/getBooksList/modelGetBooksList/getBooksList
+Content-Type: application/json
+x-trace-id: 123UFC
+
+        {
+            "searchAttributes": [
+                {
+                    "searchAttribute": "id",
+                    "value": "12345",
+                    "searchType": "EQUAL"
+                },
+                {
+                    "searchAttribute": "title",
+                    "value": "Сборник стихов",
+                    "searchType": "EQUAL"
+                },
+                {
+                    "searchAttribute": "rentalStartTime",
+                    "value": "2023-04-18T00:00:00+03:00,2023-05-18T23:00:00+03:00",
+                    "searchType": "BETWEEN"
+                },
+   {
+                    "searchAttribute": "rentalStopTime",
+                    "value": "2023-05-18T00:00:00+03:00,2023-05-16T00:00:00+03:00",
+                    "searchType": "BETWEEN"
+                },
+                {
+                    "searchAttribute": "renter",
+                    "value": "",
+                    "searchType": "NOT_EMPTY"
+                }
+            ]
+}
+
+###
+GET http://localhost:8080/OnlineLibrary/getBooksList/modelGetBooksList/getBooksList
+Content-Type: application/json
+x-trace-id: 123UFC
+
+{
+  "searchAttributes": [
+    {
+      "attribute": "author",
+      "value": "John Doe",
+      "type": "EQUAL"
+    },
+    {
+      "attribute": "category",
+      "value": "poem",
+      "type": "CONTAIN"
+    }
+  ]
+}

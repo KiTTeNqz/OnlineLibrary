@@ -7,22 +7,38 @@ import com.example.onlinelibrary.model.getBookList.GetBooksListAdapterResponse;
 import com.example.onlinelibrary.model.getBookList.GetBooksListExternalRequest;
 import com.example.onlinelibrary.model.getBookList.GetBooksListExternalResponse;
 import com.example.onlinelibrary.validator.GetBookListValidator;
+import com.fasterxml.jackson.databind.ObjectMapper;
 import org.junit.jupiter.api.Test;
 import org.springframework.boot.test.context.SpringBootTest;
 
+import java.io.File;
+import java.io.IOException;
 import java.time.LocalDateTime;
 import java.time.ZoneId;
 import java.time.ZonedDateTime;
 import java.util.ArrayList;
 import java.util.List;
 
+import static org.assertj.core.api.AssertionsForClassTypes.assertThat;
 import static org.junit.jupiter.api.Assertions.assertEquals;
 
 @SpringBootTest
 class OnlineLibraryApplicationTests {
 
+    ObjectMapper objectMapper = new ObjectMapper();
     @Test
     void contextLoads() {
+    }
+
+    @Test
+    void jsonFileToObj() throws IOException {
+        File file = new File("src/test/java/com/example/onlinelibrary/resources/adapterRequest.json");
+
+        GetBooksListAdapterRequest adapterRequest = objectMapper.readValue(file, GetBooksListAdapterRequest.class);
+
+        assertThat(adapterRequest.getSearchAttributes().get(0).getAttribute()).isEqualTo("author");
+        assertThat(adapterRequest.getSearchAttributes().get(0).getValue()).isEqualTo("John Doe");
+        assertThat(adapterRequest.getSearchAttributes().get(0).getType()).isEqualTo(GetBooksListAdapterRequest.Type.EQUAL);
     }
 
     @Test

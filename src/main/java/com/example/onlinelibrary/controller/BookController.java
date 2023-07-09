@@ -24,7 +24,7 @@ public class BookController {
     }
 
 
-    @GetMapping("OnlineLibrary/getBooksList/modelGetBooksList/getBooksList")
+    @GetMapping ("OnlineLibrary/getBooksList/modelGetBooksList/getBooksList")
     public ResponseEntity<GetBooksListAdapterResponse> getBooksList(
             @RequestHeader("x-trace-id") String traceId,
             @RequestBody GetBooksListAdapterRequest request) throws ExceptionResponse {

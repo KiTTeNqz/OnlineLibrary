@@ -1,0 +1,14 @@
+{
+  "searchAttributes": [
+    {
+      "attribute": "author",
+      "value": "John Doe",
+      "type": "EQUAL"
+    },
+    {
+      "attribute": "category",
+      "value": "poem",
+      "type": "CONTAIN"
+    }
+  ]
+}
