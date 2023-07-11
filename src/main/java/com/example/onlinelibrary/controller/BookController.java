@@ -11,11 +11,7 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
 
-import java.util.ArrayList;
-import java.util.List;
-
 @RestController
-@Validated
 public class BookController {
 
     private final BookService bookService;
@@ -26,20 +22,20 @@ public class BookController {
     }
 
 
-    @GetMapping ("OnlineLibrary/getBooksList/modelGetBooksList/getBooksList")
+    @PostMapping ("/getBooksList")
     public ResponseEntity<GetBooksListAdapterResponse> getBooksList(
             @RequestHeader("x-trace-id") String traceId,
             @RequestBody GetBooksListAdapterRequest request) throws ExceptionResponse {
             GetBooksListAdapterResponse response = bookService.getAllBooks(request, traceId);
             return ResponseEntity.ok(response);
     }
-
-    @PostMapping("OnlineLibrary/uploadBook/modelUploadBook/uploadBook")
-    public ResponseEntity<UploadBookAdapterRequest> uploadBook(
-            @RequestHeader("x-trace-id") String traceId,
-            @RequestBody UploadBookAdapterRequest request) throws ExceptionResponse {
-        UploadBookAdapterResponse response = bookService.uploadBook(request, traceId);
-        return ResponseEntity.ok(response);
-    }
+//
+//    @PostMapping("/uploadBook")
+//    public ResponseEntity<UploadBookAdapterRequest> uploadBook(
+//            @RequestHeader("x-trace-id") String traceId,
+//            @RequestBody UploadBookAdapterRequest request) throws ExceptionResponse {
+//        UploadBookAdapterResponse response = bookService.uploadBook(request, traceId);
+//        return ResponseEntity.ok(response);
+//    }
 
 }

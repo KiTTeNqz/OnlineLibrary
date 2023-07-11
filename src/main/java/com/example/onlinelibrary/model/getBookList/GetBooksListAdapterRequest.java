@@ -32,7 +32,7 @@ public class GetBooksListAdapterRequest {
         public SearchAttribute(
                 @JsonProperty("searchAttribute") String attribute,
                 @JsonProperty("value") String value,
-                @JsonProperty("type") Type type) {
+                @JsonProperty("searchType") Type type) {
             this.attribute = attribute;
             this.value = value;
             this.type = type;
@@ -67,9 +67,5 @@ public class GetBooksListAdapterRequest {
         NOT_EMPTY,
         BETWEEN;
 
-//        @JsonCreator
-//        public static Type fromString(String value) {
-//            return Type.valueOf(value.toUpperCase());
-//        }
     }
 }

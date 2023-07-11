@@ -1,15 +1,18 @@
 package com.example.onlinelibrary.mapper;
 
+import com.example.onlinelibrary.exceptions.ExceptionResponse;
 import com.example.onlinelibrary.model.ContentData;
 import com.example.onlinelibrary.model.getBookList.GetBooksListAdapterRequest;
 import com.example.onlinelibrary.model.getBookList.GetBooksListAdapterResponse;
 import com.example.onlinelibrary.model.getBookList.GetBooksListExternalRequest;
+import com.example.onlinelibrary.model.getBookList.GetBooksListExternalRequest.Attributes;
 import com.example.onlinelibrary.model.getBookList.GetBooksListExternalResponse;
 import org.springframework.stereotype.Component;
 
 import java.time.ZoneId;
 import java.time.ZoneOffset;
 import java.time.ZonedDateTime;
+import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -17,18 +20,26 @@ import java.util.stream.Collectors;
 
 @Component
 public class GetBooksListMapper {
-    public GetBooksListExternalRequest mapRequest(GetBooksListAdapterRequest request) {
+    private final Map<String, String> categoryMapping;
+
+    public GetBooksListMapper() {
+        categoryMapping = new HashMap<>();
+        categoryMapping.put("novel", "Роман");
+        categoryMapping.put("story", "Рассказ");
+        categoryMapping.put("poem", "Стихотворение");
+    }
+    public GetBooksListExternalRequest mapRequest(GetBooksListAdapterRequest request) throws ExceptionResponse {
         GetBooksListExternalRequest externalRequest = new GetBooksListExternalRequest();
-        List<GetBooksListExternalRequest.Attributes> searchData = request.getSearchAttributes().stream()
-                .map(this::mapToAttributes)
-                .collect(Collectors.toList());
-        externalRequest.setBookData(searchData);
+        List<Attributes> bookData = new ArrayList<>();
+        Attributes attributes = mapToAttributes(request.getSearchAttributes());
+        bookData.add(attributes);
+        externalRequest.setBookData(bookData);
         return externalRequest;
     }
 
     public GetBooksListAdapterResponse mapResponse(GetBooksListExternalResponse response) {
         GetBooksListAdapterResponse adapterResponse = new GetBooksListAdapterResponse();
-        List<GetBooksListAdapterResponse.Book> bookData = response.getExternalBookData().stream().
+        List<GetBooksListAdapterResponse.Book> bookData = response.getBookData().stream().
                 map(this::mapToResponseBook)
                 .collect(Collectors.toList());
         adapterResponse.setBookData(bookData);
@@ -48,7 +59,7 @@ public class GetBooksListMapper {
                         ZoneOffset.ofHours(5))
                 .withZoneSameInstant(ZoneId.of("+03:00"));
 
-        List<ContentData> contentData = externalBook.getExternalContentData().stream()
+        List<ContentData> contentData = externalBook.getContentData().stream()
                 .map(this::mapContentData)
                 .toList();
 
@@ -75,49 +86,45 @@ public class GetBooksListMapper {
     }
 
 
-    private GetBooksListExternalRequest.Attributes mapToAttributes
-            (GetBooksListAdapterRequest.SearchAttribute searchAttribute) {
-        return new GetBooksListExternalRequest.Attributes(
-                searchAttributeToExternalAttributes(searchAttribute)
-        );
+    private Attributes mapToAttributes
+            (List<GetBooksListAdapterRequest.SearchAttribute> searchAttributes) throws ExceptionResponse {
+        List<GetBooksListExternalRequest.Attribute> attributeList = searchAttributes.stream()
+                .map(searchAttribute -> {
+                    try {
+                        return searchAttributeToExternalAttribute(searchAttribute);
+                    } catch (ExceptionResponse e) {
+                        throw new RuntimeException(e);
+                    }
+                })
+                .toList();
+        return new Attributes(attributeList);
     }
 
-    private List<GetBooksListExternalRequest.Attribute> searchAttributeToExternalAttributes
-            (GetBooksListAdapterRequest.SearchAttribute searchAttribute) {
-        GetBooksListExternalRequest.Attribute externalAttribute = new GetBooksListExternalRequest.Attribute(
+    private GetBooksListExternalRequest.Attribute searchAttributeToExternalAttribute
+            (GetBooksListAdapterRequest.SearchAttribute searchAttribute) throws ExceptionResponse {
+        return new GetBooksListExternalRequest.Attribute(
                 searchAttribute.getAttribute(),
                 searchAttribute.getValue(),
                 mapType(searchAttribute.getType())
         );
-        return List.of(externalAttribute);
     }
 
     private String mapCategory(String category) {
-        Map<String, String> categoryMapping = new HashMap<>();
-        categoryMapping.put("novel", "Роман");
-        categoryMapping.put("story", "Рассказ");
-        categoryMapping.put("poem", "Стихотворение");
-
-        if (categoryMapping.containsKey(category)) {
-            return categoryMapping.get(category);
-        }
-        return category;
+        return categoryMapping.getOrDefault(category, category);
     }
 
-    private int mapType(GetBooksListAdapterRequest.Type searchType) {
+    private int mapType(GetBooksListAdapterRequest.Type searchType) throws ExceptionResponse {
         switch (searchType) {
             case CONTAIN:
-                return 0;
-//            case EQUAL:
-//                return 1;
+                return 1;
+            case EQUAL:
+                return 2;
             case NOT_EMPTY:
                 return 3;
             case BETWEEN:
                 return 4;
             default:
-                return 1;
-//                throw new ExceptionResponse("ERR-003", "error", "Ошибка обработки" +
-//                        " создания/изменения внешнего объекта");
+                throw new ExceptionResponse("ERR-002", "error", "Ошибка при валидации запроса");
         }
     }
 }

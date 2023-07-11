@@ -7,8 +7,9 @@ import com.example.onlinelibrary.model.getBookList.GetBooksListAdapterRequest;
 import com.example.onlinelibrary.model.getBookList.GetBooksListAdapterResponse;
 import com.example.onlinelibrary.model.getBookList.GetBooksListExternalRequest;
 import com.example.onlinelibrary.model.getBookList.GetBooksListExternalResponse;
-import com.example.onlinelibrary.validator.GetBookListValidator;
+import com.example.onlinelibrary.validator.GetBooksListValidator;
 import com.fasterxml.jackson.databind.ObjectMapper;
+import com.fasterxml.jackson.datatype.jsr310.JavaTimeModule;
 import org.junit.jupiter.api.Test;
 import org.springframework.boot.test.context.SpringBootTest;
 
@@ -21,12 +22,13 @@ import java.util.ArrayList;
 import java.util.List;
 
 import static org.assertj.core.api.AssertionsForClassTypes.assertThat;
+import static org.junit.jupiter.api.Assertions.assertDoesNotThrow;
 import static org.junit.jupiter.api.Assertions.assertEquals;
 
 @SpringBootTest
 class OnlineLibraryApplicationTests {
 
-    ObjectMapper objectMapper = new ObjectMapper();
+    ObjectMapper objectMapper = new ObjectMapper().registerModule(new JavaTimeModule());
     @Test
     void contextLoads() {
     }
@@ -43,15 +45,34 @@ class OnlineLibraryApplicationTests {
     }
 
     @Test
-    public void createListAdapterRequest() {
+    void jsonFileToResponse() throws IOException {
+        File file = new File("src/test/java/com/example/onlinelibrary/resources/externalResponse.json");
+
+        GetBooksListExternalResponse externalResponse = objectMapper.readValue(file, GetBooksListExternalResponse.class);
+
+        assertThat(externalResponse.getBookData().get(0).getRenter()).isEqualTo("ФИО");
+        assertThat(externalResponse.getBookData().get(0).getPublisher()).isEqualTo("Издательство");
+
+    }
+
+    @Test
+    public void createListAdapterRequest() throws ExceptionResponse {
         List<GetBooksListAdapterRequest.SearchAttribute> searchAttributes = new ArrayList<>();
         searchAttributes.add(new GetBooksListAdapterRequest.SearchAttribute("title", "book title", GetBooksListAdapterRequest.Type.EQUAL));
+        searchAttributes.add(new GetBooksListAdapterRequest.SearchAttribute("title2", "book title2", GetBooksListAdapterRequest.Type.CONTAIN));
+        searchAttributes.add(new GetBooksListAdapterRequest.SearchAttribute("title3", "book title3", GetBooksListAdapterRequest.Type.NOT_EMPTY));
+        searchAttributes.add(new GetBooksListAdapterRequest.SearchAttribute("title4", "book title4", GetBooksListAdapterRequest.Type.BETWEEN));
         GetBooksListAdapterRequest request = new GetBooksListAdapterRequest(searchAttributes);
         GetBooksListMapper mapper = new GetBooksListMapper();
         GetBooksListExternalRequest externalRequest = mapper.mapRequest(request);
+
         assertEquals("title",externalRequest.getBookData().get(0).getAttributes().get(0).getAttribute(), "Неверный аттрибут");
         assertEquals("book title",externalRequest.getBookData().get(0).getAttributes().get(0).getValue(), "Неверное значение");
-        assertEquals(1,externalRequest.getBookData().get(0).getAttributes().get(0).getType(), "Неверный тип");
+        assertEquals(2,externalRequest.getBookData().get(0).getAttributes().get(0).getType(), "Неверный тип");
+
+        assertEquals("title2",externalRequest.getBookData().get(0).getAttributes().get(1).getAttribute(), "Неверный аттрибут");
+        assertEquals("book title2",externalRequest.getBookData().get(0).getAttributes().get(1).getValue(), "Неверное значение");
+        assertEquals(1,externalRequest.getBookData().get(0).getAttributes().get(1).getType(), "Неверный тип");
     }
 
     @Test
@@ -69,7 +90,9 @@ class OnlineLibraryApplicationTests {
         LocalDateTime rentalStartTime = LocalDateTime.of(2023, 1, 1, 10, 20,30);
         LocalDateTime rentalStopTime = LocalDateTime.of(2023, 1, 10, 10, 20,30);
 
-        GetBooksListExternalResponse.ExternalBook externalBook = new GetBooksListExternalResponse.ExternalBook(123456L, "Book Title", "Publisher", "Renter", rentalStartTime, rentalStopTime, recommendationIdList, externalContentData);
+        GetBooksListExternalResponse.ExternalBook externalBook = new
+                GetBooksListExternalResponse.ExternalBook(123456L,"Renter", rentalStartTime, rentalStopTime,
+                "Book Title", "Publisher", recommendationIdList, externalContentData);
 
         externalBookData.add(externalBook);
         GetBooksListExternalResponse externalResponse = new GetBooksListExternalResponse(externalBookData);
@@ -87,12 +110,11 @@ class OnlineLibraryApplicationTests {
     }
 
     @Test
-    public void validateAdapterRequest() throws ExceptionResponse {
+    public void validateAdapterRequest(){
         List<GetBooksListAdapterRequest.SearchAttribute> searchAttributes = new ArrayList<>();
         searchAttributes.add(new GetBooksListAdapterRequest.SearchAttribute("title", "book title", GetBooksListAdapterRequest.Type.EQUAL));
         GetBooksListAdapterRequest request = new GetBooksListAdapterRequest(searchAttributes);
-        GetBookListValidator validator = new GetBookListValidator();
-        assertEquals(true,validator.validate(request),"Ошибка валидации");
+        assertDoesNotThrow(() -> GetBooksListValidator.validate(request));
     }
 
 }

@@ -1,42 +1,46 @@
 package com.example.onlinelibrary.model.getBookList;
 
 import com.example.onlinelibrary.model.ContentData;
+import com.fasterxml.jackson.annotation.JsonFormat;
 import jakarta.validation.constraints.NotBlank;
+import jakarta.validation.constraints.NotNull;
 
 import java.time.LocalDateTime;
 import java.util.List;
 
 public class GetBooksListExternalResponse {
-    private List<ExternalBook> externalBookData;
+    private List<ExternalBook> bookData;
 
-    public GetBooksListExternalResponse(List<ExternalBook> externalBookData) {
-        this.externalBookData = externalBookData;
+    public GetBooksListExternalResponse(List<ExternalBook> bookData) {
+        this.bookData = bookData;
     }
 
-
-    public List<ExternalBook> getExternalBookData() {
-        return externalBookData;
+    public GetBooksListExternalResponse() {
     }
 
-    public void setExternalBookData(List<ExternalBook> externalBookData) {
-        this.externalBookData = externalBookData;
+    public List<ExternalBook> getBookData() {
+        return bookData;
+    }
+
+    public void setBookData(List<ExternalBook> bookData) {
+        this.bookData = bookData;
     }
 
     public static class ExternalBook {
+        @NotNull
+        private Long id;
+        private String renter;
+        @JsonFormat(pattern = "dd.MM.yyyy HH:mm:ss")
+        private LocalDateTime rentalStartTime;
+        @JsonFormat(pattern = "dd.MM.yyyy HH:mm:ss")
+        private LocalDateTime rentalStopTime;
         @NotBlank
-        private Long id; //
-        private String renter; //
-        private LocalDateTime rentalStartTime; //
-        private LocalDateTime rentalStopTime; //
+        private String title;
         @NotBlank
-        private String title; //
+        private String publisher;
+        private List<Long> recommendationIdList;
         @NotBlank
-        private String publisher; //
-
-        private List<Long> recommendationIdList; //
-
-        @NotBlank
-        private List<ContentData> externalContentData; //
+        private List<ContentData> contentData;
 
         public LocalDateTime getRentalStartTime() {
             return rentalStartTime;
@@ -54,17 +58,20 @@ public class GetBooksListExternalResponse {
             this.rentalStopTime = rentalStopTime;
         }
 
-        public ExternalBook(@NotBlank Long id, @NotBlank String title, @NotBlank String publisher, String renter,
-                            LocalDateTime rentalStartTime, LocalDateTime rentalStopTime, List<Long> recommendationList,
-                            @NotBlank List<ContentData> externalContentData) {
+        public ExternalBook(Long id, String renter, LocalDateTime rentalStartTime, LocalDateTime rentalStopTime,
+                            String title, String publisher, List<Long> recommendationIdList,
+                            List<ContentData> contentData) {
             this.id = id;
-            this.title = title;
-            this.publisher = publisher;
             this.renter = renter;
             this.rentalStartTime = rentalStartTime;
             this.rentalStopTime = rentalStopTime;
-            this.recommendationIdList = recommendationList;
-            this.externalContentData = externalContentData;
+            this.title = title;
+            this.publisher = publisher;
+            this.recommendationIdList = recommendationIdList;
+            this.contentData = contentData;
+        }
+
+        public ExternalBook() {
         }
 
         public Long getId() {
@@ -107,12 +114,12 @@ public class GetBooksListExternalResponse {
             this.recommendationIdList = recommendationIdList;
         }
 
-        public List<ContentData> getExternalContentData() {
-            return externalContentData;
+        public List<ContentData> getContentData() {
+            return contentData;
         }
 
-        public void setExternalContentData(List<ContentData> externalContentData) {
-            this.externalContentData = externalContentData;
+        public void setContentData(List<ContentData> contentData) {
+            this.contentData = contentData;
         }
 
     }

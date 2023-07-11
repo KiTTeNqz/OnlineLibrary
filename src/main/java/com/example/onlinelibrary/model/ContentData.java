@@ -14,13 +14,16 @@ public class ContentData {
     @NotBlank
     private List<Long> recommendationIdList;
 
-    public ContentData(@NotBlank String author, String description, @NotBlank String title,
+    public ContentData(String description, @NotBlank String title, @NotBlank String author,
                        String category, @NotBlank List<Long> recommendationIdList) {
         this.author = author;
         this.description = description;
         this.title = title;
         this.category = category;
         this.recommendationIdList = recommendationIdList;
+    }
+
+    public ContentData() {
     }
 
     public String getDescription() {

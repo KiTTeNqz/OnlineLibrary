@@ -5,20 +5,18 @@ Content-Type: application/json
 {
   "name": "getBooksListTest",
   "request": {
-    "method": "GET",
-    "url": "/OnlineLibrary/getBooksList/modelGetBooksList/getBooksList",
+    "method": "POST",
+    "url": "/getBooksList",
     "headers": {
       "x-trace-id": {
         "equalTo": "123UFC"
       }
-    },
-    "bodyPatterns": [
-      {
-        "matchesJsonPath": "$.bookData[0].attributes[?(@.searchAttribute=='id' && @.value contains '12345')]"
-      }
-    ]
+    }
   },
   "response": {
+    "headers": {
+      "Content-Type": "application/json"
+    },
     "status": 200,
     "jsonBody": {
       "bookData": [

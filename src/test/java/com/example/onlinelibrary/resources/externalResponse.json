@@ -1,0 +1,22 @@
+{
+  "bookData": [
+    {
+      "id": 122334567,
+      "renter": "ФИО",
+      "rentalStartTime": "23.06.2022 17:42:36",
+      "rentalStopTime": "25.06.2022 07:41:30",
+      "title": "Сборник стихов",
+      "publisher": "Издательство",
+      "recommendationIdList": [123, 8347843, 6543893],
+      "contentData": [
+        {
+          "description": "Стих про зиму",
+          "title": "Зимнее утро",
+          "author": "Пушкин А.С.",
+          "category": "poem",
+          "recommendationIdList": [311749, 1234, 54323]
+        }
+      ]
+    }
+  ]
+}
