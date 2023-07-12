@@ -2,11 +2,11 @@ package com.example.onlinelibrary.mapper;
 
 import com.example.onlinelibrary.exceptions.ExceptionResponse;
 import com.example.onlinelibrary.model.ContentData;
-import com.example.onlinelibrary.model.getBookList.GetBooksListAdapterRequest;
-import com.example.onlinelibrary.model.getBookList.GetBooksListAdapterResponse;
-import com.example.onlinelibrary.model.getBookList.GetBooksListExternalRequest;
-import com.example.onlinelibrary.model.getBookList.GetBooksListExternalRequest.Attributes;
-import com.example.onlinelibrary.model.getBookList.GetBooksListExternalResponse;
+import com.example.onlinelibrary.model.getbookslist.GetBooksListAdapterRequest;
+import com.example.onlinelibrary.model.getbookslist.GetBooksListAdapterResponse;
+import com.example.onlinelibrary.model.getbookslist.GetBooksListExternalRequest;
+import com.example.onlinelibrary.model.getbookslist.GetBooksListExternalRequest.Attributes;
+import com.example.onlinelibrary.model.getbookslist.GetBooksListExternalResponse;
 import org.springframework.stereotype.Component;
 
 import java.time.ZoneId;

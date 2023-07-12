@@ -2,10 +2,6 @@ package com.example.onlinelibrary.mapper;
 
 import com.example.onlinelibrary.exceptions.ExceptionResponse;
 import com.example.onlinelibrary.model.ContentData;
-import com.example.onlinelibrary.model.getBookList.GetBooksListAdapterRequest;
-import com.example.onlinelibrary.model.getBookList.GetBooksListAdapterResponse;
-import com.example.onlinelibrary.model.getBookList.GetBooksListExternalRequest;
-import com.example.onlinelibrary.model.getBookList.GetBooksListExternalResponse;
 import com.example.onlinelibrary.model.uploadBook.UploadBookAdapterRequest;
 import com.example.onlinelibrary.model.uploadBook.UploadBookAdapterResponse;
 import com.example.onlinelibrary.model.uploadBook.UploadBookExternalRequest;
@@ -17,9 +13,7 @@ import java.time.ZoneId;
 import java.time.ZoneOffset;
 import java.time.ZonedDateTime;
 import java.util.HashMap;
-import java.util.List;
 import java.util.Map;
-import java.util.stream.Collectors;
 
 @Component
 public class UploadBookMapper {

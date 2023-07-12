@@ -1,4 +1,4 @@
-package com.example.onlinelibrary.model.getBookList;
+package com.example.onlinelibrary.model.getbookslist;
 
 import com.example.onlinelibrary.model.ContentData;
 import com.fasterxml.jackson.annotation.JsonFormat;

@@ -1,7 +1,7 @@
 package com.example.onlinelibrary.validator;
 
 import com.example.onlinelibrary.exceptions.ExceptionResponse;
-import com.example.onlinelibrary.model.getBookList.GetBooksListAdapterRequest;
+import com.example.onlinelibrary.model.getbookslist.GetBooksListAdapterRequest;
 
 public class GetBooksListValidator {
     public static void validate(GetBooksListAdapterRequest request) throws ExceptionResponse {

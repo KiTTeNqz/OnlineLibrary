@@ -1,4 +1,4 @@
-package com.example.onlinelibrary.model.getBookList;
+package com.example.onlinelibrary.model.getbookslist;
 
 import java.util.ArrayList;
 import java.util.List;
