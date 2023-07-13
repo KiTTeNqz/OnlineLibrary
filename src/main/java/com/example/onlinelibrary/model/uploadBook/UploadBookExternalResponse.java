@@ -8,6 +8,16 @@ public class UploadBookExternalResponse {
     private LocalDateTime date_of_upload;
     private String err;
 
+    public UploadBookExternalResponse(Integer status_code, String err) {
+        this.status_code = status_code;
+        this.err = err;
+    }
+
+    public UploadBookExternalResponse(Integer status_code) {
+        this.status_code = status_code;
+        this.err = "Unknown Error";
+    }
+
     public UploadBookExternalResponse(Integer status_code, Long id, LocalDateTime date_of_upload, String err) {
         this.status_code = status_code;
         this.id = id;

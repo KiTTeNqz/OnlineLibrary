@@ -1,4 +1,4 @@
-package com.example.onlinelibrary.mapper;
+package com.example.onlinelibrary.mappers;
 
 import com.example.onlinelibrary.exceptions.ExceptionResponse;
 import com.example.onlinelibrary.model.ContentData;
@@ -27,15 +27,23 @@ public class UploadBookMapper {
     }
 
     public UploadBookAdapterResponse mapResponse(UploadBookExternalResponse response) throws ExceptionResponse {
-        UploadBookAdapterResponse adapterResponse = new UploadBookAdapterResponse(
+        if(response.getStatus_code()==0)
+            return mapFullResponse(response);
+        else return mapPartlyResponse(response);
+    }
+
+    private UploadBookAdapterResponse mapFullResponse(UploadBookExternalResponse response) throws ExceptionResponse{
+        return new UploadBookAdapterResponse(
                 mapStatusCode(response.getStatus_code()),
                 response.getId(),
                 mapDateOfUpload(response.getDate_of_upload())
         );
-
-        return adapterResponse;
     }
-
+    private UploadBookAdapterResponse mapPartlyResponse(UploadBookExternalResponse response) throws ExceptionResponse{
+        return new UploadBookAdapterResponse(
+                mapStatusCode(response.getStatus_code())
+        );
+    }
     private String mapStatusCode(Integer statusCode) throws ExceptionResponse {
         switch(statusCode){
             case 0:

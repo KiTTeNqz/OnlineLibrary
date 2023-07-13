@@ -2,7 +2,7 @@ package com.example.onlinelibrary.service;
 
 import com.example.onlinelibrary.callers.BookCaller;
 import com.example.onlinelibrary.exceptions.ExceptionResponse;
-import com.example.onlinelibrary.mapper.GetBooksListMapper;
+import com.example.onlinelibrary.mappers.GetBooksListMapper;
 import com.example.onlinelibrary.model.getbookslist.GetBooksListAdapterRequest;
 import com.example.onlinelibrary.model.getbookslist.GetBooksListAdapterResponse;
 import com.example.onlinelibrary.model.getbookslist.GetBooksListExternalRequest;

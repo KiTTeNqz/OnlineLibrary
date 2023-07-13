@@ -14,6 +14,10 @@ public class UploadBookAdapterResponse {
         this.dateOfUpload = dateOfUpload;
     }
 
+    public UploadBookAdapterResponse(String status) {
+        this.status = status;
+    }
+
     public String getStatus() {
         return status;
     }

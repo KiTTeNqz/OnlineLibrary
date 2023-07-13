@@ -3,7 +3,7 @@ package com.example.onlinelibrary.webserver;
 import com.example.onlinelibrary.callers.BookCaller;
 import com.example.onlinelibrary.controller.BookController;
 import com.example.onlinelibrary.exceptions.ExceptionResponse;
-import com.example.onlinelibrary.mapper.GetBooksListMapper;
+import com.example.onlinelibrary.mappers.GetBooksListMapper;
 import com.example.onlinelibrary.model.getbookslist.GetBooksListAdapterRequest;
 import com.example.onlinelibrary.model.getbookslist.GetBooksListAdapterResponse;
 import com.example.onlinelibrary.service.BookService;
@@ -73,10 +73,7 @@ public class WebServerTest {
 
         mockWebServer.enqueue(mockResponse);
         logger.debug("Created MockResponse");
-
-
         BookController bookController = new BookController(new BookService(new BookCaller(), new GetBooksListMapper()));
-
         HttpHeaders headers = new HttpHeaders();
         headers.setContentType(MediaType.APPLICATION_JSON);
         headers.set("x-trace-id", "123UFC");
@@ -87,25 +84,14 @@ public class WebServerTest {
         searchAttributes.add(new GetBooksListAdapterRequest.SearchAttribute("title4", "book title4", GetBooksListAdapterRequest.Type.BETWEEN));
         GetBooksListAdapterRequest request = new GetBooksListAdapterRequest(searchAttributes);
         ResponseEntity<GetBooksListAdapterResponse> response = bookController.getBooksList(headers.get("x-trace-id").toString(), request);
-
         assertEquals(200, response.getStatusCode().value());
-
-        // Проверяем заголовок Content-Type
         assertEquals("application/json", response.getHeaders().getContentType().toString());
-
-        // Получаем тело ответа
         GetBooksListAdapterResponse responseBody = response.getBody();
         assertNotNull(responseBody);
-
-        // Добавьте проверки для ожидаемых данных в responseBody
-
-        // Проверяем, что запрос был выполнен
         okhttp3.mockwebserver.RecordedRequest recordedRequest = mockWebServer.takeRequest();
         assertEquals("POST", recordedRequest.getMethod());
         assertEquals("/getBooksList", recordedRequest.getPath());
         assertEquals("123UFC", recordedRequest.getHeader("x-trace-id"));
-
-        // Проверяем, что все запросы обработаны
         assertEquals(0, mockWebServer.getRequestCount());
     }
 }

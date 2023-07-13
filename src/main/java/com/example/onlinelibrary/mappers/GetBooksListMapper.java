@@ -1,4 +1,4 @@
-package com.example.onlinelibrary.mapper;
+package com.example.onlinelibrary.mappers;
 
 import com.example.onlinelibrary.exceptions.ExceptionResponse;
 import com.example.onlinelibrary.model.ContentData;
