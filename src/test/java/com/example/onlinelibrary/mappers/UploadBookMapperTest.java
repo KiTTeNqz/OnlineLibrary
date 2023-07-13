@@ -6,6 +6,7 @@ import com.example.onlinelibrary.model.uploadBook.UploadBookAdapterRequest;
 import com.example.onlinelibrary.model.uploadBook.UploadBookAdapterResponse;
 import com.example.onlinelibrary.model.uploadBook.UploadBookExternalRequest;
 import com.example.onlinelibrary.model.uploadBook.UploadBookExternalResponse;
+import com.example.onlinelibrary.model.uploadBook.inner.BookData;
 import org.junit.jupiter.api.Test;
 
 import java.time.LocalDateTime;
@@ -26,7 +27,7 @@ public class UploadBookMapperTest {
         List<ContentData> externalContentData = new ArrayList<>();
         externalContentData.add(new ContentData("Description", "Content Title", "Author", "poem", recommendationIdList));
 
-        UploadBookAdapterRequest adapterRequest = new UploadBookAdapterRequest("title", "book publisher", externalContentData);
+        UploadBookAdapterRequest adapterRequest = new UploadBookAdapterRequest(new BookData("title", "book publisher", externalContentData));
         UploadBookMapper mapper = new UploadBookMapper();
         UploadBookExternalRequest externalRequest = mapper.mapRequest(adapterRequest);
 

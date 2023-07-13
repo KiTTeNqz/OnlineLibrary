@@ -1,12 +1,18 @@
 package com.example.onlinelibrary.model.uploadBook;
 
+import com.fasterxml.jackson.annotation.JsonFormat;
+
 import java.time.LocalDateTime;
 
 public class UploadBookExternalResponse {
     private Integer status_code;
     private Long id;
+    @JsonFormat(pattern = "dd.MM.yyyy HH:mm:ss")
     private LocalDateTime date_of_upload;
     private String err;
+
+    public UploadBookExternalResponse() {
+    }
 
     public UploadBookExternalResponse(Integer status_code, String err) {
         this.status_code = status_code;

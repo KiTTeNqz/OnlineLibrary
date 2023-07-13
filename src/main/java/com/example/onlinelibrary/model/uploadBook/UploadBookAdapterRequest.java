@@ -1,43 +1,23 @@
 package com.example.onlinelibrary.model.uploadBook;
-
-import com.example.onlinelibrary.model.ContentData;
+import com.example.onlinelibrary.model.uploadBook.inner.BookData;
+import com.fasterxml.jackson.annotation.JsonCreator;
+import com.fasterxml.jackson.annotation.JsonProperty;
 
 import java.util.List;
 
 public class UploadBookAdapterRequest {
-    private String title;
+    private BookData bookData;
 
-    private String publisher;
-
-    private List<ContentData> contentData;
-
-    public UploadBookAdapterRequest(String title, String publisher, List<ContentData> contentData) {
-        this.title = title;
-        this.publisher = publisher;
-        this.contentData = contentData;
+    @JsonCreator
+    public UploadBookAdapterRequest(@JsonProperty("bookData") BookData bookData) {
+        this.bookData = bookData;
     }
 
-    public String getTitle() {
-        return title;
+    public BookData getBookData() {
+        return bookData;
     }
 
-    public void setTitle(String title) {
-        this.title = title;
-    }
-
-    public String getPublisher() {
-        return publisher;
-    }
-
-    public void setPublisher(String publisher) {
-        this.publisher = publisher;
-    }
-
-    public List<ContentData> getContentData() {
-        return contentData;
-    }
-
-    public void setContentData(List<ContentData> contentData) {
-        this.contentData = contentData;
+    public void setBookData(BookData bookData) {
+        this.bookData = bookData;
     }
 }

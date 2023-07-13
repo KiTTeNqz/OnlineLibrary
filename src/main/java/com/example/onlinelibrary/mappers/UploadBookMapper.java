@@ -19,9 +19,9 @@ import java.util.Map;
 public class UploadBookMapper {
     public UploadBookExternalRequest mapRequest(UploadBookAdapterRequest request) {
         UploadBookExternalRequest externalRequest = new UploadBookExternalRequest(
-                request.getTitle(),
-                request.getPublisher(),
-                request.getContentData().stream().map(this::mapContentData).toList()
+                request.getBookData().getTitle(),
+                request.getBookData().getPublisher(),
+                request.getBookData().getContentData().stream().map(this::mapContentData).toList()
         );
         return externalRequest;
     }

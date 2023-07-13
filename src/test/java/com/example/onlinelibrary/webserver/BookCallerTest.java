@@ -35,7 +35,7 @@ import static org.springframework.test.web.client.response.MockRestResponseCreat
 
 @ExtendWith(MockitoExtension.class)
 @SpringBootTest()
-public class BookCallerGetBooksTest {
+public class BookCallerTest {
 
     @Autowired
     private BookCaller bookCaller;
@@ -55,7 +55,7 @@ public class BookCallerGetBooksTest {
     @Test
     public void mockGetBooksList() throws URISyntaxException, ExceptionResponse, IOException {
 
-        File file = new File("src/test/java/com/example/onlinelibrary/resources/externalResponse.json");
+        File file = new File("src/test/java/com/example/onlinelibrary/resources/getBooksListExternalResponse.json");
 
         List<GetBooksListAdapterRequest.SearchAttribute> searchAttributes = new ArrayList<>();
         searchAttributes.add(new GetBooksListAdapterRequest.SearchAttribute("title", "book title", GetBooksListAdapterRequest.Type.EQUAL));
@@ -105,11 +105,10 @@ public class BookCallerGetBooksTest {
                                 "}")
                 );
 
-        GetBooksListExternalResponse actualResponse = bookCaller.callExternalSystem(externalRequest, "123UFC");
-
+        GetBooksListExternalResponse actualResponse = bookCaller.callSystemGetBooksList(externalRequest, "123UFC");
         Assertions.assertEquals(externalResponse.getBookData().get(0).getId(), actualResponse.getBookData().get(0).getId());
-
         mockServer.verify();
-
     }
+
+
 }

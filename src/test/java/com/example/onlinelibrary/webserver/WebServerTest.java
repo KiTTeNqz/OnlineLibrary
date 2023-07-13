@@ -4,6 +4,7 @@ import com.example.onlinelibrary.callers.BookCaller;
 import com.example.onlinelibrary.controller.BookController;
 import com.example.onlinelibrary.exceptions.ExceptionResponse;
 import com.example.onlinelibrary.mappers.GetBooksListMapper;
+import com.example.onlinelibrary.mappers.UploadBookMapper;
 import com.example.onlinelibrary.model.getbookslist.GetBooksListAdapterRequest;
 import com.example.onlinelibrary.model.getbookslist.GetBooksListAdapterResponse;
 import com.example.onlinelibrary.service.BookService;
@@ -14,9 +15,12 @@ import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
+import org.springframework.web.client.RestTemplate;
 
 import java.io.IOException;
 import java.util.ArrayList;
@@ -25,8 +29,12 @@ import java.util.List;
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertNotNull;
 
+//@SpringBootTest
 public class WebServerTest {
     private MockWebServer mockWebServer;
+
+//    @Autowired
+    private RestTemplate restTemplate;
     private static final Logger logger = LoggerFactory.getLogger(WebServerTest.class);
 
 
@@ -44,7 +52,7 @@ public class WebServerTest {
     }
 
     @Test
-    public void testMyAdapter() throws IOException, InterruptedException, ExceptionResponse {
+    public void testMyAdapter() throws InterruptedException, ExceptionResponse {
         MockResponse mockResponse = new MockResponse()
                 .setResponseCode(200)
                 .setHeader("Content-Type", "application/json")
@@ -73,7 +81,7 @@ public class WebServerTest {
 
         mockWebServer.enqueue(mockResponse);
         logger.debug("Created MockResponse");
-        BookController bookController = new BookController(new BookService(new BookCaller(), new GetBooksListMapper()));
+        BookController bookController = new BookController(new BookService(new BookCaller(restTemplate), new GetBooksListMapper(), new UploadBookMapper()));
         HttpHeaders headers = new HttpHeaders();
         headers.setContentType(MediaType.APPLICATION_JSON);
         headers.set("x-trace-id", "123UFC");

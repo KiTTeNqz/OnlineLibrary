@@ -44,6 +44,35 @@ Content-Type: application/json
 }
 
 ###
+POST http://localhost:8080/__admin/mappings
+Content-Type: application/json
+
+{
+  "name": "uploadBookTest",
+  "request": {
+    "method": "POST",
+    "url": "/uploadBook",
+    "headers": {
+      "x-trace-id": {
+        "equalTo": "123UFC"
+      }
+    }
+  },
+  "response": {
+    "headers": {
+      "Content-Type": "application/json"
+    },
+    "status": 200,
+    "jsonBody": {
+      "status_code": 0,
+      "id": 122334567,
+      "date_of_upload": "23.06.2023 20:22:36"
+    }
+  }
+}
+
+
+###
 GET http://localhost:8080/OnlineLibrary/getBooksList/modelGetBooksList/getBooksList
 Content-Type: application/json
 x-trace-id: 123UFC

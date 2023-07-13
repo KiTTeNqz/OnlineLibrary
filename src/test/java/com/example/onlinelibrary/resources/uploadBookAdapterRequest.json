@@ -1,0 +1,14 @@
+{
+  "bookData": {
+    "title": "Сборник стихов",
+    "publisher": "Издательство",
+    "contentData": [
+      {
+        "description": "Стих про зиму",
+        "title": "Зимнее утро",
+        "author": "Пушкин А.С.",
+        "category": "Стихотворение"
+      }
+    ]
+  }
+}
