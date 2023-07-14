@@ -6,11 +6,11 @@ import com.fasterxml.jackson.annotation.JsonProperty;
 
 import java.util.List;
 
+
 public class BookData {
     private String title;
     private String publisher;
     private List<ContentData> contentData;
-
 
     @JsonCreator
     public BookData(
