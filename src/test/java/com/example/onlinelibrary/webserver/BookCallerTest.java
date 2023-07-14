@@ -3,9 +3,16 @@ package com.example.onlinelibrary.webserver;
 import com.example.onlinelibrary.callers.BookCaller;
 import com.example.onlinelibrary.exceptions.ExceptionResponse;
 import com.example.onlinelibrary.mappers.GetBooksListMapper;
+import com.example.onlinelibrary.mappers.UploadBookMapper;
+import com.example.onlinelibrary.model.ContentData;
 import com.example.onlinelibrary.model.getbookslist.GetBooksListAdapterRequest;
 import com.example.onlinelibrary.model.getbookslist.GetBooksListExternalRequest;
 import com.example.onlinelibrary.model.getbookslist.GetBooksListExternalResponse;
+import com.example.onlinelibrary.model.getbookslist.inner.request.SearchAttribute;
+import com.example.onlinelibrary.model.uploadBook.UploadBookAdapterRequest;
+import com.example.onlinelibrary.model.uploadBook.UploadBookExternalRequest;
+import com.example.onlinelibrary.model.uploadBook.UploadBookExternalResponse;
+import com.example.onlinelibrary.model.uploadBook.inner.BookData;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.fasterxml.jackson.datatype.jsr310.JavaTimeModule;
 import org.junit.jupiter.api.Assertions;
@@ -57,11 +64,11 @@ public class BookCallerTest {
 
         File file = new File("src/test/java/com/example/onlinelibrary/resources/getBooksListExternalResponse.json");
 
-        List<GetBooksListAdapterRequest.SearchAttribute> searchAttributes = new ArrayList<>();
-        searchAttributes.add(new GetBooksListAdapterRequest.SearchAttribute("title", "book title", GetBooksListAdapterRequest.Type.EQUAL));
-        searchAttributes.add(new GetBooksListAdapterRequest.SearchAttribute("title2", "book title2", GetBooksListAdapterRequest.Type.CONTAIN));
-        searchAttributes.add(new GetBooksListAdapterRequest.SearchAttribute("title3", "book title3", GetBooksListAdapterRequest.Type.NOT_EMPTY));
-        searchAttributes.add(new GetBooksListAdapterRequest.SearchAttribute("title4", "book title4", GetBooksListAdapterRequest.Type.BETWEEN));
+        List<SearchAttribute> searchAttributes = new ArrayList<>();
+        searchAttributes.add(new SearchAttribute("title", "book title", SearchAttribute.Type.EQUAL));
+        searchAttributes.add(new SearchAttribute("title2", "book title2", SearchAttribute.Type.CONTAIN));
+        searchAttributes.add(new SearchAttribute("title3", "book title3", SearchAttribute.Type.NOT_EMPTY));
+        searchAttributes.add(new SearchAttribute("title4", "book title4", SearchAttribute.Type.BETWEEN));
         GetBooksListAdapterRequest request = new GetBooksListAdapterRequest(searchAttributes);
         GetBooksListMapper mapper = new GetBooksListMapper();
         GetBooksListExternalRequest externalRequest = mapper.mapRequest(request);
@@ -110,5 +117,48 @@ public class BookCallerTest {
         mockServer.verify();
     }
 
+    @Test
+    public void mockUploadBook() throws URISyntaxException, ExceptionResponse, IOException {
 
+        File file = new File("src/test/java/com/example/onlinelibrary/resources/uploadBookExternalResponse.json");
+
+        List<Long> recommendationIdList = new ArrayList<>();
+        recommendationIdList.add(4L);
+        recommendationIdList.add(5L);
+        recommendationIdList.add(6L);
+
+        List<ContentData> externalContentData = new ArrayList<>();
+        externalContentData.add(new ContentData("Description", "Content Title", "Author", "poem", recommendationIdList));
+
+        UploadBookAdapterRequest adapterRequest = new UploadBookAdapterRequest(new BookData("title", "book publisher", externalContentData));
+        UploadBookMapper mapper = new UploadBookMapper();
+        UploadBookExternalRequest externalRequest = mapper.mapRequest(adapterRequest);
+
+        HttpHeaders headers = new HttpHeaders();
+        headers.setContentType(MediaType.APPLICATION_JSON);
+        headers.set("x-trace-id", "123UFC");
+
+        UploadBookExternalResponse externalResponse = objectMapper.readValue(file, UploadBookExternalResponse.class);
+
+
+        mockServer.expect(ExpectedCount.once(),
+                        requestTo(new URI("http://localhost:8080/uploadBook")))
+                .andExpect(method(HttpMethod.POST))
+                .andExpect(header("Content-type", "application/json"))
+                .andExpect(header("x-trace-id", "123UFC"))
+
+                .andRespond(withStatus(HttpStatus.OK)
+                        .contentType(MediaType.APPLICATION_JSON)
+                        .body("{\n" +
+                                "  \"status_code\": 0,\n" +
+                                "  \"id\": 122334567,\n" +
+                                "  \"date_of_upload\": \"23.06.2023 20:22:36\"\n" +
+                                "}")
+                );
+
+
+        UploadBookExternalResponse actualResponse = bookCaller.callSystemUploadBook(externalRequest, "123UFC");
+        Assertions.assertEquals(externalResponse.getStatus_code(), actualResponse.getStatus_code());
+        mockServer.verify();
+    }
 }

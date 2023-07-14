@@ -6,6 +6,8 @@ import com.example.onlinelibrary.model.getbookslist.GetBooksListAdapterRequest;
 import com.example.onlinelibrary.model.getbookslist.GetBooksListAdapterResponse;
 import com.example.onlinelibrary.model.getbookslist.GetBooksListExternalRequest;
 import com.example.onlinelibrary.model.getbookslist.GetBooksListExternalResponse;
+import com.example.onlinelibrary.model.getbookslist.inner.request.SearchAttribute;
+import com.example.onlinelibrary.model.getbookslist.inner.response.ExternalBook;
 import org.junit.jupiter.api.Test;
 
 import java.time.LocalDateTime;
@@ -19,11 +21,11 @@ import static org.junit.jupiter.api.Assertions.assertEquals;
 public class GetBooksListMapperTest {
     @Test
     public void createListAdapterRequest() throws ExceptionResponse {
-        List<GetBooksListAdapterRequest.SearchAttribute> searchAttributes = new ArrayList<>();
-        searchAttributes.add(new GetBooksListAdapterRequest.SearchAttribute("title", "book title", GetBooksListAdapterRequest.Type.EQUAL));
-        searchAttributes.add(new GetBooksListAdapterRequest.SearchAttribute("title2", "book title2", GetBooksListAdapterRequest.Type.CONTAIN));
-        searchAttributes.add(new GetBooksListAdapterRequest.SearchAttribute("title3", "book title3", GetBooksListAdapterRequest.Type.NOT_EMPTY));
-        searchAttributes.add(new GetBooksListAdapterRequest.SearchAttribute("title4", "book title4", GetBooksListAdapterRequest.Type.BETWEEN));
+        List<SearchAttribute> searchAttributes = new ArrayList<>();
+        searchAttributes.add(new SearchAttribute("title", "book title", SearchAttribute.Type.EQUAL));
+        searchAttributes.add(new SearchAttribute("title2", "book title2", SearchAttribute.Type.CONTAIN));
+        searchAttributes.add(new SearchAttribute("title3", "book title3", SearchAttribute.Type.NOT_EMPTY));
+        searchAttributes.add(new SearchAttribute("title4", "book title4", SearchAttribute.Type.BETWEEN));
         GetBooksListAdapterRequest request = new GetBooksListAdapterRequest(searchAttributes);
         GetBooksListMapper mapper = new GetBooksListMapper();
         GetBooksListExternalRequest externalRequest = mapper.mapRequest(request);
@@ -39,7 +41,7 @@ public class GetBooksListMapperTest {
 
     @Test
     public void createExternalResponse() {
-        List<GetBooksListExternalResponse.ExternalBook> externalBookData = new ArrayList<>();
+        List<ExternalBook> externalBookData = new ArrayList<>();
 
         List<Long> recommendationIdList = new ArrayList<>();
         recommendationIdList.add(4L);
@@ -52,8 +54,7 @@ public class GetBooksListMapperTest {
         LocalDateTime rentalStartTime = LocalDateTime.of(2023, 1, 1, 10, 20,30);
         LocalDateTime rentalStopTime = LocalDateTime.of(2023, 1, 10, 10, 20,30);
 
-        GetBooksListExternalResponse.ExternalBook externalBook = new
-                GetBooksListExternalResponse.ExternalBook(123456L,"Renter", rentalStartTime, rentalStopTime,
+        ExternalBook externalBook = new ExternalBook(123456L,"Renter", rentalStartTime, rentalStopTime,
                 "Book Title", "Publisher", recommendationIdList, externalContentData);
 
         externalBookData.add(externalBook);

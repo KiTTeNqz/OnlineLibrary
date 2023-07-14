@@ -5,7 +5,6 @@ import com.example.onlinelibrary.model.getbookslist.GetBooksListAdapterRequest;
 import com.example.onlinelibrary.model.getbookslist.GetBooksListAdapterResponse;
 import com.example.onlinelibrary.model.uploadBook.UploadBookAdapterRequest;
 import com.example.onlinelibrary.model.uploadBook.UploadBookAdapterResponse;
-import com.example.onlinelibrary.model.uploadBook.UploadBookExternalRequest;
 import com.example.onlinelibrary.service.BookService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;

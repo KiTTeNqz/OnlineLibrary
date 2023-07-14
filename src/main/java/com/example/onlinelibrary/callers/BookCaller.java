@@ -1,6 +1,5 @@
 package com.example.onlinelibrary.callers;
 
-import com.example.onlinelibrary.exceptions.ExceptionResponse;
 import com.example.onlinelibrary.model.getbookslist.GetBooksListExternalRequest;
 import com.example.onlinelibrary.model.getbookslist.GetBooksListExternalResponse;
 import com.example.onlinelibrary.model.uploadBook.UploadBookExternalRequest;
@@ -21,7 +20,7 @@ public class BookCaller {
         this.restTemplate = restTemplate;
     }
 
-    public GetBooksListExternalResponse callSystemGetBooksList(GetBooksListExternalRequest request, String traceId) throws ExceptionResponse {
+    public GetBooksListExternalResponse callSystemGetBooksList(GetBooksListExternalRequest request, String traceId){
         HttpHeaders headers = new HttpHeaders();
         headers.setContentType(MediaType.APPLICATION_JSON);
         headers.set("x-trace-id", String.valueOf(traceId));
@@ -39,7 +38,7 @@ public class BookCaller {
         return responseEntity.getBody();
     }
 
-    public UploadBookExternalResponse callSystemUploadBook(UploadBookExternalRequest request, String traceId) throws ExceptionResponse {
+    public UploadBookExternalResponse callSystemUploadBook(UploadBookExternalRequest request, String traceId){
         HttpHeaders headers = new HttpHeaders();
         headers.setContentType(MediaType.APPLICATION_JSON);
         headers.set("x-trace-id", String.valueOf(traceId));

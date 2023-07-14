@@ -17,7 +17,7 @@ import static org.junit.jupiter.api.Assertions.assertEquals;
 
 public class UploadBookMapperTest {
     @Test
-    public void createUploadExternalRequest() throws ExceptionResponse {
+    public void createUploadExternalRequest(){
 
         List<Long> recommendationIdList = new ArrayList<>();
         recommendationIdList.add(4L);

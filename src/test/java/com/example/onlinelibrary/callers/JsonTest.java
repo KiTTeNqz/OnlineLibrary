@@ -2,6 +2,7 @@ package com.example.onlinelibrary.callers;
 
 import com.example.onlinelibrary.model.getbookslist.GetBooksListAdapterRequest;
 import com.example.onlinelibrary.model.getbookslist.GetBooksListExternalResponse;
+import com.example.onlinelibrary.model.getbookslist.inner.request.SearchAttribute;
 import com.example.onlinelibrary.model.uploadBook.UploadBookAdapterRequest;
 import com.example.onlinelibrary.model.uploadBook.UploadBookExternalResponse;
 import com.fasterxml.jackson.databind.ObjectMapper;
@@ -23,7 +24,7 @@ public class JsonTest {
         GetBooksListAdapterRequest adapterRequest = objectMapper.readValue(file, GetBooksListAdapterRequest.class);
         assertThat(adapterRequest.getSearchAttributes().get(0).getAttribute()).isEqualTo("author");
         assertThat(adapterRequest.getSearchAttributes().get(0).getValue()).isEqualTo("John Doe");
-        assertThat(adapterRequest.getSearchAttributes().get(0).getType()).isEqualTo(GetBooksListAdapterRequest.Type.EQUAL);
+        assertThat(adapterRequest.getSearchAttributes().get(0).getType()).isEqualTo(SearchAttribute.Type.EQUAL);
     }
 
     @Test

@@ -4,6 +4,7 @@ import com.example.onlinelibrary.callers.BookCaller;
 import com.example.onlinelibrary.exceptions.ExceptionResponse;
 import com.example.onlinelibrary.mappers.GetBooksListMapper;
 import com.example.onlinelibrary.mappers.UploadBookMapper;
+import com.example.onlinelibrary.model.ContentData;
 import com.example.onlinelibrary.model.getbookslist.GetBooksListAdapterRequest;
 import com.example.onlinelibrary.model.getbookslist.GetBooksListAdapterResponse;
 import com.example.onlinelibrary.model.getbookslist.GetBooksListExternalRequest;
@@ -15,8 +16,6 @@ import com.example.onlinelibrary.model.uploadBook.UploadBookExternalResponse;
 import com.example.onlinelibrary.validator.ContentDataValidator;
 import com.example.onlinelibrary.validator.GetBooksListValidator;
 import org.springframework.stereotype.Service;
-
-import java.util.stream.Collectors;
 
 @Service
 public class BookService {
@@ -44,7 +43,9 @@ public class BookService {
     }
 
     public UploadBookAdapterResponse uploadBook(UploadBookAdapterRequest adapterRequest, String traceId) throws ExceptionResponse{
-        //TODO: ДОБАВИТЬ ВАЛИДАЦИЮ СЮДА
+        for (ContentData contentData : adapterRequest.getBookData().getContentData()) {
+            ContentDataValidator.validate(contentData);
+        }
         UploadBookExternalRequest externalRequest = uploadMapper.mapRequest(adapterRequest);
         UploadBookExternalResponse externalResponse = bookCaller.callSystemUploadBook(externalRequest, traceId);
         UploadBookAdapterResponse adapterResponse = uploadMapper.mapResponse(externalResponse);

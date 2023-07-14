@@ -5,8 +5,12 @@ import com.example.onlinelibrary.model.ContentData;
 import com.example.onlinelibrary.model.getbookslist.GetBooksListAdapterRequest;
 import com.example.onlinelibrary.model.getbookslist.GetBooksListAdapterResponse;
 import com.example.onlinelibrary.model.getbookslist.GetBooksListExternalRequest;
-import com.example.onlinelibrary.model.getbookslist.GetBooksListExternalRequest.Attributes;
+import com.example.onlinelibrary.model.getbookslist.inner.request.Attribute;
+import com.example.onlinelibrary.model.getbookslist.inner.request.Attributes;
 import com.example.onlinelibrary.model.getbookslist.GetBooksListExternalResponse;
+import com.example.onlinelibrary.model.getbookslist.inner.request.SearchAttribute;
+import com.example.onlinelibrary.model.getbookslist.inner.response.Book;
+import com.example.onlinelibrary.model.getbookslist.inner.response.ExternalBook;
 import org.springframework.stereotype.Component;
 
 import java.time.ZoneId;
@@ -39,7 +43,7 @@ public class GetBooksListMapper {
 
     public GetBooksListAdapterResponse mapResponse(GetBooksListExternalResponse response) {
         GetBooksListAdapterResponse adapterResponse = new GetBooksListAdapterResponse();
-        List<GetBooksListAdapterResponse.Book> bookData = response.getBookData().stream().
+        List<Book> bookData = response.getBookData().stream().
                 map(this::mapToResponseBook)
                 .collect(Collectors.toList());
         adapterResponse.setBookData(bookData);
@@ -47,7 +51,7 @@ public class GetBooksListMapper {
         return adapterResponse;
     }
 
-    private GetBooksListAdapterResponse.Book mapToResponseBook(GetBooksListExternalResponse.ExternalBook externalBook) {
+    private Book mapToResponseBook(ExternalBook externalBook) {
         // Конвертация LocalDateTime в ZonedDateTime
         ZonedDateTime rentalStartTime = ZonedDateTime.of(
                         externalBook.getRentalStartTime(),
@@ -63,7 +67,7 @@ public class GetBooksListMapper {
                 .map(this::mapContentData)
                 .toList();
 
-        return new GetBooksListAdapterResponse.Book(
+        return new Book(
                 externalBook.getId(),
                 externalBook.getTitle(),
                 externalBook.getPublisher(),
@@ -87,8 +91,8 @@ public class GetBooksListMapper {
 
 
     private Attributes mapToAttributes
-            (List<GetBooksListAdapterRequest.SearchAttribute> searchAttributes) throws ExceptionResponse {
-        List<GetBooksListExternalRequest.Attribute> attributeList = searchAttributes.stream()
+            (List<SearchAttribute> searchAttributes) throws ExceptionResponse {
+        List<Attribute> attributeList = searchAttributes.stream()
                 .map(searchAttribute -> {
                     try {
                         return searchAttributeToExternalAttribute(searchAttribute);
@@ -100,9 +104,9 @@ public class GetBooksListMapper {
         return new Attributes(attributeList);
     }
 
-    private GetBooksListExternalRequest.Attribute searchAttributeToExternalAttribute
-            (GetBooksListAdapterRequest.SearchAttribute searchAttribute) throws ExceptionResponse {
-        return new GetBooksListExternalRequest.Attribute(
+    private Attribute searchAttributeToExternalAttribute
+            (SearchAttribute searchAttribute) throws ExceptionResponse {
+        return new Attribute(
                 searchAttribute.getAttribute(),
                 searchAttribute.getValue(),
                 mapType(searchAttribute.getType())
@@ -113,7 +117,7 @@ public class GetBooksListMapper {
         return categoryMapping.getOrDefault(category, category);
     }
 
-    private int mapType(GetBooksListAdapterRequest.Type searchType) throws ExceptionResponse {
+    private int mapType(SearchAttribute.Type searchType) throws ExceptionResponse {
         switch (searchType) {
             case CONTAIN:
                 return 1;

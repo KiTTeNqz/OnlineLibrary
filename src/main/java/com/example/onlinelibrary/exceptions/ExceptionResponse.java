@@ -20,6 +20,7 @@ public class ExceptionResponse extends Exception{
         this.errorCode = error;
         this.timestamp = Instant.now().toEpochMilli();
         this.status = status;
+        this.messages = message;
     }
 
     public ExceptionResponse(String error, String status) {
