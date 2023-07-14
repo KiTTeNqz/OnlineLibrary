@@ -1,9 +1,10 @@
 package com.example.onlinelibrary.model;
 
 import jakarta.validation.constraints.NotBlank;
-
+import lombok.Getter;
 import java.util.List;
 
+@Getter
 public class ContentData {
     private String description;
     @NotBlank
@@ -24,25 +25,5 @@ public class ContentData {
     }
 
     public ContentData() {
-    }
-
-    public String getDescription() {
-        return description;
-    }
-
-    public String getTitle() {
-        return title;
-    }
-
-    public String getAuthor() {
-        return author;
-    }
-
-    public String getCategory() {
-        return category;
-    }
-
-    public List<Long> getRecommendationIdList() {
-        return recommendationIdList;
     }
 }

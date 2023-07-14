@@ -1,7 +1,12 @@
 package com.example.onlinelibrary.model.uploadBook;
 
+import lombok.Getter;
+import lombok.Setter;
+
 import java.time.ZonedDateTime;
 
+@Getter
+@Setter
 public class UploadBookAdapterResponse {
 
     private String status;
@@ -18,27 +23,4 @@ public class UploadBookAdapterResponse {
         this.status = status;
     }
 
-    public String getStatus() {
-        return status;
-    }
-
-    public void setStatus(String status) {
-        this.status = status;
-    }
-
-    public Long getId() {
-        return id;
-    }
-
-    public void setId(Long id) {
-        this.id = id;
-    }
-
-    public ZonedDateTime getDateOfUpload() {
-        return dateOfUpload;
-    }
-
-    public void setDateOfUpload(ZonedDateTime dateOfUpload) {
-        this.dateOfUpload = dateOfUpload;
-    }
 }

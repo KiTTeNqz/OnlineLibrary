@@ -1,9 +1,13 @@
 package com.example.onlinelibrary.model.uploadBook;
 
 import com.example.onlinelibrary.model.ContentData;
+import lombok.Getter;
+import lombok.Setter;
 
 import java.util.List;
 
+@Getter
+@Setter
 public class UploadBookExternalRequest {
     private String title;
 
@@ -14,30 +18,6 @@ public class UploadBookExternalRequest {
     public UploadBookExternalRequest(String title, String publisher, List<ContentData> contentData) {
         this.title = title;
         this.publisher = publisher;
-        this.contentData = contentData;
-    }
-
-    public String getTitle() {
-        return title;
-    }
-
-    public void setTitle(String title) {
-        this.title = title;
-    }
-
-    public String getPublisher() {
-        return publisher;
-    }
-
-    public void setPublisher(String publisher) {
-        this.publisher = publisher;
-    }
-
-    public List<ContentData> getContentData() {
-        return contentData;
-    }
-
-    public void setContentData(List<ContentData> contentData) {
         this.contentData = contentData;
     }
 }

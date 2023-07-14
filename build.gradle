@@ -41,8 +41,7 @@ dependencies {
     testImplementation group: 'org.mockito', name: 'mockito-core', version: '5.4.0'
     // https://mvnrepository.com/artifact/org.projectlombok/lombok
     compileOnly group: 'org.projectlombok', name: 'lombok', version: '1.18.24'
-
-
+    annotationProcessor 'org.projectlombok:lombok:1.18.24'
 
 }
 

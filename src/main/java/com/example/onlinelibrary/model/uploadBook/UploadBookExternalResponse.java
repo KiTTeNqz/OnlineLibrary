@@ -1,9 +1,13 @@
 package com.example.onlinelibrary.model.uploadBook;
 
 import com.fasterxml.jackson.annotation.JsonFormat;
+import lombok.Getter;
+import lombok.Setter;
 
 import java.time.LocalDateTime;
 
+@Getter
+@Setter
 public class UploadBookExternalResponse {
     private Integer status_code;
     private Long id;
@@ -36,37 +40,5 @@ public class UploadBookExternalResponse {
         this.id = id;
         this.date_of_upload = date_of_upload;
         err = "";
-    }
-
-    public Integer getStatus_code() {
-        return status_code;
-    }
-
-    public void setStatus_code(Integer status_code) {
-        this.status_code = status_code;
-    }
-
-    public Long getId() {
-        return id;
-    }
-
-    public void setId(Long id) {
-        this.id = id;
-    }
-
-    public LocalDateTime getDate_of_upload() {
-        return date_of_upload;
-    }
-
-    public void setDate_of_upload(LocalDateTime date_of_upload) {
-        this.date_of_upload = date_of_upload;
-    }
-
-    public String getErr() {
-        return err;
-    }
-
-    public void setErr(String err) {
-        this.err = err;
     }
 }
