@@ -1,4 +1,4 @@
-###
+###getBooksList заглушка
 POST http://localhost:8080/__admin/mappings
 Content-Type: application/json
 
@@ -43,7 +43,7 @@ Content-Type: application/json
   }
 }
 
-###
+###uploadBook заглушка
 POST http://localhost:8080/__admin/mappings
 Content-Type: application/json
 
@@ -71,6 +71,28 @@ Content-Type: application/json
   }
 }
 
+###updateRecommendation заглушка
+POST http://localhost:8080/__admin/mappings
+Content-Type: application/json
+
+{
+  "name": "updateRecommendationTest",
+  "request": {
+    "method": "PATCH",
+    "url": "/updateRecommendation",
+    "headers": {
+      "x-trace-id": {
+        "equalTo": "123UFC"
+      }
+    }
+  },
+  "response": {
+    "headers": {
+      "Content-Type": "application/json"
+    },
+    "status": 200
+  }
+}
 
 ###
 GET http://localhost:8080/OnlineLibrary/getBooksList/modelGetBooksList/getBooksList

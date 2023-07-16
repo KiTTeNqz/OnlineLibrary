@@ -2,6 +2,8 @@ package com.example.onlinelibrary.callers;
 
 import com.example.onlinelibrary.model.getbookslist.GetBooksListExternalRequest;
 import com.example.onlinelibrary.model.getbookslist.GetBooksListExternalResponse;
+import com.example.onlinelibrary.model.updaterecommendation.UpdateRecommendationAdapterRequest;
+import com.example.onlinelibrary.model.updaterecommendation.UpdateRecommendationExternalRequest;
 import com.example.onlinelibrary.model.uploadBook.UploadBookExternalRequest;
 import com.example.onlinelibrary.model.uploadBook.UploadBookExternalResponse;
 import org.springframework.http.HttpEntity;
@@ -23,7 +25,7 @@ public class BookCaller {
     public GetBooksListExternalResponse callSystemGetBooksList(GetBooksListExternalRequest request, String traceId){
         HttpHeaders headers = new HttpHeaders();
         headers.setContentType(MediaType.APPLICATION_JSON);
-        headers.set("x-trace-id", String.valueOf(traceId));
+        headers.set("x-trace-id", traceId);
 
         HttpEntity<GetBooksListExternalRequest> requestEntity = new HttpEntity<>(request, headers);
 
@@ -41,7 +43,7 @@ public class BookCaller {
     public UploadBookExternalResponse callSystemUploadBook(UploadBookExternalRequest request, String traceId){
         HttpHeaders headers = new HttpHeaders();
         headers.setContentType(MediaType.APPLICATION_JSON);
-        headers.set("x-trace-id", String.valueOf(traceId));
+        headers.set("x-trace-id", traceId);
 
         HttpEntity<UploadBookExternalRequest> requestEntity = new HttpEntity<>(request, headers);
 
@@ -54,5 +56,21 @@ public class BookCaller {
         );
 
         return responseEntity.getBody();
+    }
+
+    public void callSystemUpdateRecommendationList(UpdateRecommendationExternalRequest request, String traceId) {
+        HttpHeaders headers = new HttpHeaders();
+        headers.setContentType(MediaType.APPLICATION_JSON);
+        headers.set("x-trace-id", traceId);
+
+        HttpEntity<UpdateRecommendationExternalRequest> requestEntity = new HttpEntity<>(request, headers);
+
+        String responseEntity;
+        responseEntity = restTemplate.patchForObject(
+                "http://localhost:8080/updateRecommendation",
+                requestEntity,
+                String.class
+        );
+        System.out.println();
     }
 }

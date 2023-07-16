@@ -4,6 +4,7 @@ import com.example.onlinelibrary.callers.BookCaller;
 import com.example.onlinelibrary.controller.BookController;
 import com.example.onlinelibrary.exceptions.ExceptionResponse;
 import com.example.onlinelibrary.mappers.GetBooksListMapper;
+import com.example.onlinelibrary.mappers.UpdateRecommendationMapper;
 import com.example.onlinelibrary.mappers.UploadBookMapper;
 import com.example.onlinelibrary.model.getbookslist.GetBooksListAdapterRequest;
 import com.example.onlinelibrary.model.getbookslist.GetBooksListAdapterResponse;
@@ -80,7 +81,7 @@ public class WebServerTest {
 
         mockWebServer.enqueue(mockResponse);
         logger.debug("Created MockResponse");
-        BookController bookController = new BookController(new BookService(new BookCaller(restTemplate), new GetBooksListMapper(), new UploadBookMapper()));
+        BookController bookController = new BookController(new BookService(new BookCaller(restTemplate), new GetBooksListMapper(), new UploadBookMapper(), new UpdateRecommendationMapper()));
         HttpHeaders headers = new HttpHeaders();
         headers.setContentType(MediaType.APPLICATION_JSON);
         headers.set("x-trace-id", "123UFC");
