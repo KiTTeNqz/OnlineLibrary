@@ -1,10 +1,13 @@
 package com.example.onlinelibrary.exceptions;
 
 import jakarta.validation.constraints.NotBlank;
-import jakarta.validation.constraints.NotEmpty;
+import lombok.Getter;
+import lombok.Setter;
 
 import java.time.Instant;
 
+@Getter
+@Setter
 public class ExceptionResponse extends Exception{
     @NotBlank
     private String errorCode;
@@ -27,30 +30,6 @@ public class ExceptionResponse extends Exception{
         this.errorCode = error;
         this.messages = "";
         this.timestamp = Instant.now().toEpochMilli();
-        this.status = status;
-    }
-
-    public String getErrorCode() {
-        return errorCode;
-    }
-
-    public void setErrorCode(String errorCode) {
-        this.errorCode = errorCode;
-    }
-
-    public String getMessages() {
-        return messages;
-    }
-
-    public void setMessages(String messages) {
-        this.messages = messages;
-    }
-
-    public String getStatus() {
-        return status;
-    }
-
-    public void setStatus(String status) {
         this.status = status;
     }
 }

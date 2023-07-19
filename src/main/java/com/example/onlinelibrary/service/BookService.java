@@ -23,14 +23,8 @@ import org.springframework.stereotype.Service;
 @Service
 public class BookService {
     private final BookCaller bookCaller;
-
-    public BookCaller getBookCaller() {
-        return bookCaller;
-    }
-
     private final GetBooksListMapper mapper;
     private final UploadBookMapper uploadMapper;
-
     private final UpdateRecommendationMapper updateRecommendationMapper;
 
     public BookService(BookCaller bookCaller, GetBooksListMapper mapper, UploadBookMapper uploadMapper, UpdateRecommendationMapper updateRecommendationMapper) {

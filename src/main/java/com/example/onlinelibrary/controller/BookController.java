@@ -16,10 +16,6 @@ public class BookController {
 
     private final BookService bookService;
 
-    public BookService getBookService() {
-        return bookService;
-    }
-
     @Autowired
     public BookController(BookService bookService) {
         this.bookService = bookService;

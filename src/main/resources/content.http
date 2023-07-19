@@ -95,7 +95,7 @@ Content-Type: application/json
 }
 
 ###
-GET http://localhost:8080/OnlineLibrary/getBooksList/modelGetBooksList/getBooksList
+POST http://localhost:8080/getBooksList
 Content-Type: application/json
 x-trace-id: 123UFC
 
@@ -129,22 +129,47 @@ x-trace-id: 123UFC
             ]
 }
 
-###
-GET http://localhost:8080/OnlineLibrary/getBooksList/modelGetBooksList/getBooksList
+###getBooksList заглушка1 для бизнес-модуля
+POST http://localhost:8080/__admin/mappings
 Content-Type: application/json
-x-trace-id: 123UFC
 
 {
-  "searchAttributes": [
-    {
-      "attribute": "author",
-      "value": "John Doe",
-      "type": "EQUAL"
-    },
-    {
-      "attribute": "category",
-      "value": "poem",
-      "type": "CONTAIN"
+  "name": "getBooksListTest",
+  "request": {
+    "method": "POST",
+    "url": "/getBooksList",
+    "headers": {
+      "x-trace-id": {
+        "equalTo": "123UFC"
+      }
     }
-  ]
+  },
+  "response": {
+    "headers": {
+      "Content-Type": "application/json"
+    },
+    "status": 200,
+    "jsonBody": {
+      "bookData": [
+        {
+          "id": 122334567,
+          "renter": "ФИО",
+          "rentalStartTime": "23.06.2022 17:42:36",
+          "rentalStopTime": "25.06.2022 07:41:30",
+          "title": "Сборник стихов",
+          "publisher": "Издательство",
+          "recommendationIdList": [123, 8347843, 6543893],
+          "contentData": [
+            {
+              "description": "Стих про зиму",
+              "title": "Зимнее утро",
+              "author": "Пушкин А.С.",
+              "category": "poem",
+              "recommendationIdList": [311749, 1234, 54323]
+            }
+          ]
+        }
+      ]
+    }
+  }
 }

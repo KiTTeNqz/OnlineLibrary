@@ -1,7 +1,12 @@
 package com.example.onlinelibrary.exceptions;
 
+import lombok.Getter;
+import lombok.Setter;
+
 import java.time.Instant;
 
+@Getter
+@Setter
 public class ErrorResponse {
     private String errorCode;
     private String messages;
@@ -21,37 +26,5 @@ public class ErrorResponse {
         this.messages = "";
         this.timestamp = Instant.now().toEpochMilli();
         this.status = status;
-    }
-
-    public String getErrorCode() {
-        return errorCode;
-    }
-
-    public void setErrorCode(String errorCode) {
-        this.errorCode = errorCode;
-    }
-
-    public String getStatus() {
-        return status;
-    }
-
-    public void setStatus(String status) {
-        this.status = status;
-    }
-
-    public String getMessages() {
-        return messages;
-    }
-
-    public void setMessages(String messages) {
-        this.messages = messages;
-    }
-
-    public Long getTimestamp() {
-        return timestamp;
-    }
-
-    public void setTimestamp(Long timestamp) {
-        this.timestamp = timestamp;
     }
 }

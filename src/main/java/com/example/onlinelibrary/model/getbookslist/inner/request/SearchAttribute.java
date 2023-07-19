@@ -9,9 +9,9 @@ import lombok.Setter;
 @Getter
 @Setter
 public class SearchAttribute {
-    String attribute;
-    String value;
-    Type type;
+    private String attribute;
+    private String value;
+    private Type type;
 
     @JsonCreator
     public SearchAttribute(

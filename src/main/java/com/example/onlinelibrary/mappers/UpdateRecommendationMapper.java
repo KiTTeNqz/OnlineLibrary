@@ -4,8 +4,6 @@ import com.example.onlinelibrary.model.updaterecommendation.UpdateRecommendation
 import com.example.onlinelibrary.model.updaterecommendation.UpdateRecommendationExternalRequest;
 import org.springframework.stereotype.Component;
 
-import java.util.stream.Collectors;
-
 @Component
 public class UpdateRecommendationMapper {
     public UpdateRecommendationExternalRequest mapRequest(UpdateRecommendationAdapterRequest adapterRequest){

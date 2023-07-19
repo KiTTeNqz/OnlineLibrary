@@ -64,7 +64,7 @@ public class GetBooksListMapper {
                 .withZoneSameInstant(ZoneId.of("+03:00"));
 
         List<ContentData> contentData = externalBook.getContentData().stream()
-                .map(this::mapContentData)
+                .peek(content -> content.setCategory(mapCategory(content.getCategory())))
                 .toList();
 
         return new Book(
@@ -79,28 +79,13 @@ public class GetBooksListMapper {
         );
     }
 
-    private ContentData mapContentData(ContentData externalContentData){
-        return new ContentData(
-          externalContentData.getDescription(),
-          externalContentData.getTitle(),
-          externalContentData.getAuthor(),
-          mapCategory(externalContentData.getCategory()),
-          externalContentData.getRecommendationIdList()
-        );
-    }
-
-
     private Attributes mapToAttributes
             (List<SearchAttribute> searchAttributes) throws ExceptionResponse {
-        List<Attribute> attributeList = searchAttributes.stream()
-                .map(searchAttribute -> {
-                    try {
-                        return searchAttributeToExternalAttribute(searchAttribute);
-                    } catch (ExceptionResponse e) {
-                        throw new RuntimeException(e);
-                    }
-                })
-                .toList();
+        List<Attribute> attributeList = new ArrayList<>();
+        for (SearchAttribute searchAttribute : searchAttributes) {
+            Attribute attribute = searchAttributeToExternalAttribute(searchAttribute);
+            attributeList.add(attribute);
+        }
         return new Attributes(attributeList);
     }
 
@@ -127,8 +112,7 @@ public class GetBooksListMapper {
                 return 3;
             case BETWEEN:
                 return 4;
-            default:
-                throw new ExceptionResponse("ERR-002", "error", "Ошибка при валидации запроса");
         }
+        return 0;
     }
 }

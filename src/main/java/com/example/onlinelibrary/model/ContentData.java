@@ -2,9 +2,12 @@ package com.example.onlinelibrary.model;
 
 import jakarta.validation.constraints.NotBlank;
 import lombok.Getter;
+import lombok.Setter;
+
 import java.util.List;
 
 @Getter
+@Setter
 public class ContentData {
     private String description;
     @NotBlank
