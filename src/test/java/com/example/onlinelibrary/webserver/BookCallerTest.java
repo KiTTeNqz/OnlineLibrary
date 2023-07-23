@@ -62,7 +62,7 @@ public class BookCallerTest {
     @Test
     public void mockGetBooksList() throws URISyntaxException, ExceptionResponse, IOException {
 
-        File file = new File("src/test/java/com/example/onlinelibrary/resources/getBooksListExternalResponse.json");
+        File file = new File("src/test/java/resources/getBooksListExternalResponse.json");
 
         List<SearchAttribute> searchAttributes = new ArrayList<>();
         searchAttributes.add(new SearchAttribute("title", "book title", SearchAttribute.Type.EQUAL));
@@ -120,7 +120,7 @@ public class BookCallerTest {
     @Test
     public void mockUploadBook() throws URISyntaxException, ExceptionResponse, IOException {
 
-        File file = new File("src/test/java/com/example/onlinelibrary/resources/uploadBookExternalResponse.json");
+        File file = new File("src/test/java/resources/uploadBookExternalResponse.json");
 
         List<Long> recommendationIdList = new ArrayList<>();
         recommendationIdList.add(4L);
