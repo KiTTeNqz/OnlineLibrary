@@ -6,6 +6,13 @@ import com.example.onlinelibrary.model.getbookslist.inner.request.SearchAttribut
 
 public class GetBooksListValidator {
     public static void validate(GetBooksListAdapterRequest request) throws ExceptionResponse {
+
+        if (request == null
+                || request.getSearchAttributes() == null
+                || request.getSearchAttributes().isEmpty()) {
+            throw new ExceptionResponse("ERR-002","error","Ошибка при валидации запроса");
+        }
+
         for(SearchAttribute searchAttribute: request.getSearchAttributes()){
             if(searchAttribute.getAttribute().isBlank()||
             searchAttribute.getValue()==null)

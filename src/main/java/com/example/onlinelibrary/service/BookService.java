@@ -16,8 +16,7 @@ import com.example.onlinelibrary.model.uploadBook.UploadBookAdapterRequest;
 import com.example.onlinelibrary.model.uploadBook.UploadBookAdapterResponse;
 import com.example.onlinelibrary.model.uploadBook.UploadBookExternalRequest;
 import com.example.onlinelibrary.model.uploadBook.UploadBookExternalResponse;
-import com.example.onlinelibrary.validator.ContentDataValidator;
-import com.example.onlinelibrary.validator.GetBooksListValidator;
+import com.example.onlinelibrary.validator.*;
 import org.springframework.stereotype.Service;
 
 @Service
@@ -35,6 +34,7 @@ public class BookService {
     }
 
     public GetBooksListAdapterResponse getAllBooks(GetBooksListAdapterRequest adapterRequest, String traceId) throws ExceptionResponse {
+        HeaderValidator.validateXTraceId(traceId);
         GetBooksListValidator.validate(adapterRequest);
         GetBooksListExternalRequest externalRequest = mapper.mapRequest(adapterRequest);
         GetBooksListExternalResponse externalResponse = bookCaller.callSystemGetBooksList(externalRequest, traceId);
@@ -43,6 +43,8 @@ public class BookService {
     }
 
     public UploadBookAdapterResponse uploadBook(UploadBookAdapterRequest adapterRequest, String traceId) throws ExceptionResponse{
+        HeaderValidator.validateXTraceId(traceId);
+        UploadBookValidator.validate(adapterRequest);
         for (ContentData contentData : adapterRequest.getBookData().getContentData()) {
             ContentDataValidator.validate(contentData);
         }
@@ -52,7 +54,9 @@ public class BookService {
         return adapterResponse;
     }
 
-    public void updateRecommendation(UpdateRecommendationAdapterRequest request, String traceId) {
+    public void updateRecommendation(UpdateRecommendationAdapterRequest request, String traceId) throws ExceptionResponse {
+        HeaderValidator.validateXTraceId(traceId);
+        UpdateRecommendationValidator.validate(request);
         UpdateRecommendationExternalRequest externalRequest = updateRecommendationMapper.mapRequest(request);
         bookCaller.callSystemUpdateRecommendationList(externalRequest, traceId);
     }

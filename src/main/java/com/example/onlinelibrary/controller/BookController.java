@@ -24,7 +24,7 @@ public class BookController {
 
     @PostMapping ("/getBooksList")
     public ResponseEntity<GetBooksListAdapterResponse> getBooksList(
-            @RequestHeader("x-trace-id") String traceId,
+            @RequestHeader(value = "x-trace-id", required = false) String traceId,
             @RequestBody GetBooksListAdapterRequest request) throws ExceptionResponse {
             GetBooksListAdapterResponse response = bookService.getAllBooks(request, traceId);
             return ResponseEntity.ok(response);
@@ -32,7 +32,7 @@ public class BookController {
 
     @PostMapping("/uploadBook")
     public ResponseEntity<UploadBookAdapterResponse> uploadBook(
-            @RequestHeader("x-trace-id") String traceId,
+            @RequestHeader(value = "x-trace-id", required = false) String traceId,
             @RequestBody UploadBookAdapterRequest request) throws ExceptionResponse{
         UploadBookAdapterResponse response = bookService.uploadBook(request, traceId);
         return ResponseEntity.ok(response);
@@ -40,7 +40,7 @@ public class BookController {
 
     @PatchMapping("/updateRecommendation")
     public ResponseEntity<String> updateRecommendation(
-            @RequestHeader("x-trace-id") String traceId,
+            @RequestHeader(value = "x-trace-id", required = false) String traceId,
             @RequestBody UpdateRecommendationAdapterRequest request) throws ExceptionResponse{
         bookService.updateRecommendation(request, traceId);
         return ResponseEntity.ok().build();

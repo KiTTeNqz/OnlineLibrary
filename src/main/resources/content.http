@@ -95,7 +95,7 @@ Content-Type: application/json
 }
 
 ###
-POST http://localhost:8080/getBooksList
+POST http://localhost:8081/getBooksList
 Content-Type: application/json
 x-trace-id: 123UFC
 
@@ -128,13 +128,12 @@ x-trace-id: 123UFC
                 }
             ]
 }
-
-###getBooksList заглушка1 для бизнес-модуля
+### Заглушка для проверки обновления рекоммендаций 1.
 POST http://localhost:8080/__admin/mappings
 Content-Type: application/json
 
 {
-  "name": "getBooksListTest",
+  "name": "getBooksListTest1",
   "request": {
     "method": "POST",
     "url": "/getBooksList",
@@ -142,7 +141,12 @@ Content-Type: application/json
       "x-trace-id": {
         "equalTo": "123UFC"
       }
-    }
+    },
+    "bodyPatterns": [
+      {
+        "matchesJsonPath": "$.searchAttributes[?(@.attribute == 'publisher' && @.value == 'Издатель1')]"
+      }
+    ]
   },
   "response": {
     "headers": {
@@ -152,24 +156,83 @@ Content-Type: application/json
     "jsonBody": {
       "bookData": [
         {
-          "id": 122334567,
-          "renter": "ФИО",
-          "rentalStartTime": "23.06.2022 17:42:36",
-          "rentalStopTime": "25.06.2022 07:41:30",
-          "title": "Сборник стихов",
-          "publisher": "Издательство",
-          "recommendationIdList": [123, 8347843, 6543893],
+          "id": 1,
+          "renter": "John Doe",
+          "rentalStartTime": "28.06.2022 12:00:36",
+          "rentalStopTime": "30.06.2022 07:41:30",
+          "title": "Book 1",
+          "publisher": "Издатель1",
+          "recommendationIdList": [123, 456],
           "contentData": [
             {
-              "description": "Стих про зиму",
-              "title": "Зимнее утро",
-              "author": "Пушкин А.С.",
-              "category": "poem",
-              "recommendationIdList": [311749, 1234, 54323]
+              "description": "Description 1",
+              "title": "Title 1",
+              "author": "Author 1",
+              "category": "Category 1",
+              "recommendationIdList": [789, 101112]
             }
           ]
         }
       ]
     }
   }
+}
+
+### Заглушка для проверки обновления рекоммендаций 2.
+POST http://localhost:8080/__admin/mappings
+Content-Type: application/json
+
+{
+  "name": "getBooksListTest3",
+  "request": {
+    "method": "POST",
+    "url": "/getBooksList",
+    "headers": {
+      "x-trace-id": {
+        "equalTo": "123UFC"
+      }
+    },
+    "bodyPatterns": [
+      {
+        "matchesJsonPath": "$.searchAttributes[?(@.attribute == 'publisher' && @.value == 'Издатель2')]"
+      }
+    ]
+  },
+  "response": {
+    "headers": {
+      "Content-Type": "application/json"
+    },
+    "status": 200,
+    "jsonBody": {
+      "bookData": [
+        {
+          "id": 2,
+          "renter": "Jane Smith",
+          "rentalStartTime": "10.08.2022 02:02:36",
+          "rentalStopTime": "30.09.2023 05:01:30",
+          "title": "Book 2",
+          "publisher": "Издатель2",
+          "recommendationIdList": [321, 654],
+          "contentData": [
+            {
+              "description": "Description 2",
+              "title": "Title 2",
+              "author": "Author 2",
+              "category": "Category 2",
+              "recommendationIdList": [987, 654]
+            }
+          ]
+        }
+      ]
+    }
+  }
+}
+
+###
+PATCH http://localhost:8081/updateRecommendation
+Content-Type: application/json
+x-trace-id: 123UFC
+
+{
+
 }
